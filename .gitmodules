@@ -1,0 +1,20 @@
+[submodule "spiffe-spire"]
+	path = spiffe-spire
+	url = https://github.com/openshift/spiffe-spire
+	branch = main
+[submodule "spiffe-spiffe-helper"]
+	path = spiffe-spiffe-helper
+	url = https://github.com/openshift/spiffe-spiffe-helper
+	branch = main
+[submodule "spiffe-spire-controller-manager"]
+	path = spiffe-spire-controller-manager
+	url = https://github.com/openshift/spiffe-spire-controller-manager
+	branch = main
+[submodule "spiffe-spiffe-csi"]
+	path = spiffe-spiffe-csi
+	url = https://github.com/openshift/spiffe-spiffe-csi
+	branch = main
+[submodule "spiffe-go-spiffe"]
+	path = spiffe-go-spiffe
+	url = https://github.com/openshift/spiffe-go-spiffe
+	branch = main
