@@ -1,20 +1,24 @@
 [submodule "spiffe-spire"]
 	path = spiffe-spire
-	url = https://github.com/openshift/spiffe-spire
+	url = https://github.com/openshift/spiffe-spire.git
 	branch = main
 [submodule "spiffe-spiffe-helper"]
 	path = spiffe-spiffe-helper
-	url = https://github.com/openshift/spiffe-spiffe-helper
+	url = https://github.com/openshift/spiffe-spiffe-helper.git
 	branch = main
 [submodule "spiffe-spire-controller-manager"]
 	path = spiffe-spire-controller-manager
-	url = https://github.com/openshift/spiffe-spire-controller-manager
+	url = https://github.com/openshift/spiffe-spire-controller-manager.git
 	branch = main
 [submodule "spiffe-spiffe-csi"]
 	path = spiffe-spiffe-csi
-	url = https://github.com/openshift/spiffe-spiffe-csi
+	url = https://github.com/openshift/spiffe-spiffe-csi.git
 	branch = main
 [submodule "spiffe-go-spiffe"]
 	path = spiffe-go-spiffe
-	url = https://github.com/openshift/spiffe-go-spiffe
+	url = https://github.com/openshift/spiffe-go-spiffe.git
+	branch = main
+[submodule "zero-trust-workload-identity-manager"]
+	path = zero-trust-workload-identity-manager
+	url = https://github.com/openshift/zero-trust-workload-identity-manager.git
 	branch = main
