@@ -1,0 +1,49 @@
+# Build stage using Red Hat's Golang builder image with FIPS support
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.23 AS builder
+
+ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-helper"
+
+WORKDIR ${SOURCE_DIR}
+COPY spiffe-spiffe-helper .
+COPY spiffe-spiffe-helper/LICENSE /licenses/.
+
+ENV GO_BUILD_TAGS=strictfipsruntime,openssl
+ENV GOEXPERIMENT=strictfipsruntime
+ENV CGO_ENABLED=0
+ENV GOFLAGS=""
+
+# Build the spiffe-helper binary
+RUN go build -o bin/spiffe-helper -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spiffe-helper/main.go
+
+# Final image using RHEL UBI minimal image
+FROM registry.redhat.io/rhel9-4-els/rhel:9.4
+
+# ARGs injected by Konflux pipeline
+ARG RELEASE_VERSION
+ARG COMMIT_SHA
+ARG SOURCE_URL
+ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-helper"
+
+COPY --from=builder ${SOURCE_DIR}/bin/spiffe-helper /spiffe-helper
+COPY --from=builder /licenses /licenses
+
+USER 65534:65534
+
+LABEL com.redhat.component="spiffe-helper-container" \
+      name="spiffe-csi-driver/spiffe-helper-rhel9" \
+      version="${RELEASE_VERSION}" \
+      summary="SPIFFE Helper Binary" \
+      maintainer="Red Hat, Inc." \
+      description="Helper binary for provisioning SVIDs from SPIFFE Workload API" \
+      vendor="Red Hat, Inc." \
+      release="${RELEASE_VERSION}" \
+      io.openshift.expose-services="" \
+      io.openshift.tags="spiffe,spire,csi,security,identity" \
+      io.openshift.build.commit.id="${COMMIT_SHA}" \
+      io.openshift.build.source-location="${SOURCE_URL}" \
+      io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
+      io.k8s.display-name="SPIFFE Helper" \
+      io.k8s.description="Lightweight helper binary to fetch and expose SVIDs for workloads."
+
+ENTRYPOINT ["/spiffe-helper"]
+CMD []

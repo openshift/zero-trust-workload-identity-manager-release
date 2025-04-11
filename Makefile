@@ -158,6 +158,11 @@ build-bundle-image:
 build-spiffe-spire-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_containerfile_name) -t $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) .
 
+## build operand cert-manager image.
+.PHONY: build-spiffe-helper-image
+build-spiffe-helper-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_helper_containerfile_name) -t $(SPIFFE_SPIFFE_HELPER_IMAGE):$(IMAGE_VERSION) .
+
 ## check shell scripts.
 .PHONY: verify-shell-scripts
 verify-shell-scripts:
