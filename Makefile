@@ -47,7 +47,7 @@ SPIFFE_GO_SPIFFE_BRANCH ?= $(LOCAL_BRANCH_NAME)
 ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
 
 ## container build tool to use for creating images.
-CONTAINER_ENGINE ?= podman
+CONTAINER_ENGINE ?= docker
 
 ## image name for zero-trust-workload-identity-manager.
 ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE ?= zero-trust-workload-identity-manager
@@ -138,6 +138,11 @@ build-images: build-operand-images build-operator-image build-bundle-image
 .PHONY: build-operator-image
 build-operator-image:
 	$(IMAGE_BUILD_CMD) -f $(zero_trust_workload_identity_manager_containerfile_name) -t $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE):$(IMAGE_VERSION) .
+
+## build spiffe-csi image.
+.PHONY: build-spiffe-csi-image
+build-spiffe-csi-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_csi_containerfile_name) -t $(SPIFFE_SPIFFE_CSI_IMAGE):$(IMAGE_VERSION) .
 
 ## build all operand images
 .PHONY: build-operand-images
