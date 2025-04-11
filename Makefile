@@ -153,15 +153,20 @@ build-operand-images: build-spiffe-spire-image
 build-bundle-image:
 	$(IMAGE_BUILD_CMD) -f $(zero_trust_workload_identity_manager_bundle_containerfile_name) -t $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION) .
 
-## build operand cert-manager image.
+## build operand spiffe-spire image.
 .PHONY: build-spiffe-spire-image
 build-spiffe-spire-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_containerfile_name) -t $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) .
 
-## build operand cert-manager image.
+## build operand spiffe-helper image.
 .PHONY: build-spiffe-helper-image
 build-spiffe-helper-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_helper_containerfile_name) -t $(SPIFFE_SPIFFE_HELPER_IMAGE):$(IMAGE_VERSION) .
+
+## build operand spire-controller-manager image.
+.PHONY: build-spire-controller-manager-image
+build-spire-controller-manager-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_controller_manager_containerfile_name) -t $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) .
 
 ## check shell scripts.
 .PHONY: verify-shell-scripts
