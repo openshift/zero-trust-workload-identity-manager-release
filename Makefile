@@ -10,15 +10,16 @@ spiffe_spire_containerfile_name = Containerfile.spiffe-spire
 spiffe_spire_controller_manager_submodule_dir = spiffe-spire-controller-manager
 spiffe_spire_controller_manager_containerfile_name = Containerfile.spiffe-spire-controller-manager
 
+
+spiffe_spire_server_containerfile_name = Containerfile.spire-server
+spiffe_spire_agent_containerfile_name = Containerfile.spire-agent
+spiffe_spire_oidc_discovery_provider_containerfile_name = Containerfile.spire-oidc-discovery-provider
+
 spiffe_spiffe_helper_submodule_dir = spiffe-spiffe-helper
 spiffe_spiffe_helper_containerfile_name = Containerfile.spiffe-spiffe-helper
 
 spiffe_spiffe_csi_submodule_dir = spiffe-spiffe-csi
 spiffe_spiffe_csi_containerfile_name = Containerfile.spiffe-spiffe-csi
-
-spiffe_go_spiffe_submodule_dir = spiffe-go-spiffe
-spiffe_go_spiffe_containerfile_name = Containerfile.spiffe-go-spiffe
-
 
 
 commit_sha = $(strip $(shell git rev-parse HEAD))
@@ -40,9 +41,6 @@ SPIFFE_SPIFFE_CSI_BRANCH ?= $(LOCAL_BRANCH_NAME)
 ## current branch name of the spiffe-spiffe-helper submodule.
 SPIFFE_SPIFFE_HELPER_BRANCH ?= $(LOCAL_BRANCH_NAME)
 
-## current branch name of the spiffe-go-spiffe submodule.
-SPIFFE_GO_SPIFFE_BRANCH ?= $(LOCAL_BRANCH_NAME)
-
 ## current branch name of the zero-trust-workload-identity-manager submodule
 ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
 
@@ -61,14 +59,18 @@ SPIFFE_SPIRE_IMAGE ?= spiffe-spire
 ## image name for spiffe-spire-controller-manager.
 SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE ?= spiffe-spire-controller-manager
 
+
+SPIFFE_SPIRE_SERVER_IMAGE ?= spire-server
+
+SPIFFE_SPIRE_AGENT_IMAGE ?= spire-agent
+
+SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE ?= spire-oidc-discovery-provider
+
 ## image name for spiffe-spiffe-csi.
 SPIFFE_SPIFFE_CSI_IMAGE ?= spiffe-spiffe-csi
 
 ## image name for spiffe-spiffe-helper.
 SPIFFE_SPIFFE_HELPER_IMAGE ?= spiffe-spiffe-helper
-
-## image name for spiffe-go-spiffe.
-SPIFFE_GO_SPIFFE_IMAGE ?= spiffe-go-spiffe
 
 
 ## image version to tag the created images with.
@@ -115,7 +117,6 @@ switch-submodules-branch:
 	cd $(spiffe_spire_controller_manager_submodule_dir); git checkout $(SPIFFE_SPIRE_CONTROLLER_MANAGER_BRANCH); cd - > /dev/null
 	cd $(spiffe_spiffe_csi_submodule_dir); git checkout $(SPIFFE_SPIFFE_CSI_BRANCH); cd - > /dev/null
 	cd $(spiffe_spiffe_helper_submodule_dir); git checkout $(SPIFFE_SPIFFE_HELPER_BRANCH); cd - > /dev/null
-	cd $(spiffe_go_spiffe_submodule_dir); git checkout $(SPIFFE_GO_SPIFFE_BRANCH); cd - > /dev/null
 	cd $(zero_trust_workload_identity_manager_submodule_dir); git checkout $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH); cd - > /dev/null
 	# update with local cache.
 	git submodule update
@@ -127,7 +128,6 @@ update-submodules:
 	git submodule update --remote $(spiffe_spire_controller_manager_submodule_dir)
 	git submodule update --remote $(spiffe_spiffe_csi_submodule_dir)
 	git submodule update --remote $(spiffe_spiffe_helper_submodule_dir)
-	git submodule update --remote $(spiffe_go_spiffe_submodule_dir)
 	git submodule update --remote $(zero_trust_workload_identity_manager_submodule_dir)
 
 ## build all the images - operator, operand and operator-bundle.
@@ -168,6 +168,19 @@ build-spiffe-helper-image:
 build-spire-controller-manager-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_controller_manager_containerfile_name) -t $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) .
 
+## build operand spire-controller-manager image.
+.PHONY: build-spire-server-image
+build-spire-server-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_server_containerfile_name) -t $(SPIFFE_SPIRE_SERVER_IMAGE):$(IMAGE_VERSION) .
+
+.PHONY: build-spire-agent-image
+build-spire-agent-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_agent_containerfile_name) -t $(SPIFFE_SPIRE_AGENT_IMAGE):$(IMAGE_VERSION) .
+
+.PHONY: build-spire-oidc-discovery-provider-image
+build-spire-oidc-discovery-provider-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_oidc_discovery_provider_containerfile_name) -t $(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(IMAGE_VERSION) .
+
 ## check shell scripts.
 .PHONY: verify-shell-scripts
 verify-shell-scripts:
@@ -194,7 +207,6 @@ $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) \
 $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) \
 $(SPIFFE_SPIFFE_CSI_IMAGE):$(IMAGE_VERSION) \
 $(SPIFFE_SPIFFE_HELPER_IMAGE):$(IMAGE_VERSION) \
-$(SPIFFE_GO_SPIFFE_IMAGE):$(IMAGE_VERSION) \
 $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)
 
 ## validate renovate config.

@@ -14,10 +14,6 @@
 	path = spiffe-spiffe-csi
 	url = https://github.com/openshift/spiffe-spiffe-csi.git
 	branch = main
-[submodule "spiffe-go-spiffe"]
-	path = spiffe-go-spiffe
-	url = https://github.com/openshift/spiffe-go-spiffe.git
-	branch = main
 [submodule "zero-trust-workload-identity-manager"]
 	path = zero-trust-workload-identity-manager
 	url = https://github.com/openshift/zero-trust-workload-identity-manager.git
