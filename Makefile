@@ -15,8 +15,6 @@ spiffe_spire_server_containerfile_name = Containerfile.spire-server
 spiffe_spire_agent_containerfile_name = Containerfile.spire-agent
 spiffe_spire_oidc_discovery_provider_containerfile_name = Containerfile.spire-oidc-discovery-provider
 
-spiffe_spiffe_helper_submodule_dir = spiffe-spiffe-helper
-spiffe_spiffe_helper_containerfile_name = Containerfile.spiffe-spiffe-helper
 
 spiffe_spiffe_csi_submodule_dir = spiffe-spiffe-csi
 spiffe_spiffe_csi_containerfile_name = Containerfile.spiffe-spiffe-csi
@@ -38,8 +36,6 @@ SPIFFE_SPIRE_CONTROLLER_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
 ## current branch name of the spiffe-spiffe-csi submodule.
 SPIFFE_SPIFFE_CSI_BRANCH ?= $(LOCAL_BRANCH_NAME)
 
-## current branch name of the spiffe-spiffe-helper submodule.
-SPIFFE_SPIFFE_HELPER_BRANCH ?= $(LOCAL_BRANCH_NAME)
 
 ## current branch name of the zero-trust-workload-identity-manager submodule
 ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
@@ -68,9 +64,6 @@ SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE ?= spire-oidc-discovery-provider
 
 ## image name for spiffe-spiffe-csi.
 SPIFFE_SPIFFE_CSI_IMAGE ?= spiffe-spiffe-csi
-
-## image name for spiffe-spiffe-helper.
-SPIFFE_SPIFFE_HELPER_IMAGE ?= spiffe-spiffe-helper
 
 
 ## image version to tag the created images with.
@@ -116,7 +109,6 @@ switch-submodules-branch:
 	cd $(spiffe_spire_submodule_dir); git checkout $(SPIFFE_SPIRE_BRANCH); cd - > /dev/null
 	cd $(spiffe_spire_controller_manager_submodule_dir); git checkout $(SPIFFE_SPIRE_CONTROLLER_MANAGER_BRANCH); cd - > /dev/null
 	cd $(spiffe_spiffe_csi_submodule_dir); git checkout $(SPIFFE_SPIFFE_CSI_BRANCH); cd - > /dev/null
-	cd $(spiffe_spiffe_helper_submodule_dir); git checkout $(SPIFFE_SPIFFE_HELPER_BRANCH); cd - > /dev/null
 	cd $(zero_trust_workload_identity_manager_submodule_dir); git checkout $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH); cd - > /dev/null
 	# update with local cache.
 	git submodule update
@@ -127,7 +119,6 @@ update-submodules:
 	git submodule update --remote $(spiffe_spire_submodule_dir)
 	git submodule update --remote $(spiffe_spire_controller_manager_submodule_dir)
 	git submodule update --remote $(spiffe_spiffe_csi_submodule_dir)
-	git submodule update --remote $(spiffe_spiffe_helper_submodule_dir)
 	git submodule update --remote $(zero_trust_workload_identity_manager_submodule_dir)
 
 ## build all the images - operator, operand and operator-bundle.
@@ -158,10 +149,6 @@ build-bundle-image:
 build-spiffe-spire-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_containerfile_name) -t $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) .
 
-## build operand spiffe-helper image.
-.PHONY: build-spiffe-helper-image
-build-spiffe-helper-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_helper_containerfile_name) -t $(SPIFFE_SPIFFE_HELPER_IMAGE):$(IMAGE_VERSION) .
 
 ## build operand spire-controller-manager image.
 .PHONY: build-spire-controller-manager-image
@@ -206,7 +193,6 @@ clean:
 $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) \
 $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) \
 $(SPIFFE_SPIFFE_CSI_IMAGE):$(IMAGE_VERSION) \
-$(SPIFFE_SPIFFE_HELPER_IMAGE):$(IMAGE_VERSION) \
 $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)
 
 ## validate renovate config.

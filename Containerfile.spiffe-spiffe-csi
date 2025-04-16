@@ -31,7 +31,7 @@ COPY --from=builder /licenses /licenses
 USER 65534:65534
 
 LABEL com.redhat.component="spiffe-csi-driver-container" \
-      name="spiffe-csi-driver/spiffe-csi-driver-rhel9" \
+      name="zero-trust-workload-identity-manager/spiffe-csi-driver-rhel9" \
       version="${RELEASE_VERSION}" \
       summary="SPIFFE CSI Driver" \
       maintainer="Red Hat, Inc." \

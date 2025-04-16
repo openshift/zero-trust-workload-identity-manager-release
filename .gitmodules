@@ -2,10 +2,6 @@
 	path = spiffe-spire
 	url = https://github.com/openshift/spiffe-spire.git
 	branch = main
-[submodule "spiffe-spiffe-helper"]
-	path = spiffe-spiffe-helper
-	url = https://github.com/openshift/spiffe-spiffe-helper.git
-	branch = main
 [submodule "spiffe-spire-controller-manager"]
 	path = spiffe-spire-controller-manager
 	url = https://github.com/openshift/spiffe-spire-controller-manager.git

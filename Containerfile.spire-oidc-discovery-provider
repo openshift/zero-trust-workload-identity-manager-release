@@ -28,7 +28,7 @@ COPY --from=builder /licenses /licenses
 USER 65534:65534
 
 LABEL com.redhat.component="oidc-discovery-provider-container" \
-      name="spiffe-spire/oidc-discovery-provider-rhel9" \
+      name="zero-trust-workload-identity-manager/spiffe-spire-oidc-discovery-provider-rhel9" \
       version="${RELEASE_VERSION}" \
       summary="SPIRE OIDC Discovery Provider" \
       maintainer="Red Hat, Inc." \

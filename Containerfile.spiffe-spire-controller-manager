@@ -29,7 +29,7 @@ COPY --from=builder /licenses /licenses
 
 USER 65534:65534
 
-LABEL name="spiffe-spire-controller-manager-rhel9" \
+LABEL name="zero-trust-workload-identity-manager/spiffe-spire-controller-manager-rhel9" \
       version="${RELEASE_VERSION}" \
       release="${RELEASE_VERSION}" \
       summary="SPIFFE-SPIRE Controller Manager for Kubernetes" \

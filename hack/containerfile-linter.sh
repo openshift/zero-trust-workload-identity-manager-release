@@ -25,7 +25,7 @@ containerfile_linter()
 		linter "${CONTAINERFILES[@]}"
 		return
 	fi
-	mapfile -t ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_CONTAINERFILES < <(find . -type f -name 'Containerfile*' '!' -path './zero-trust-workload-identity-manager/*' '!' -path './spiffe-spire/*' '!' -path './spiffe-spiffe-helper/*' '!' -path './spiffe-spire-controller-manager/*' '!' -path './spiffe-spiffe-csi/*' '!' -path './spiffe-go-spiffe/*')
+	mapfile -t ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_CONTAINERFILES < <(find . -type f -name 'Containerfile*' '!' -path './zero-trust-workload-identity-manager/*' '!' -path './spiffe-spire/*' '!' -path './spiffe-spire-controller-manager/*' '!' -path './spiffe-spiffe-csi/*')
 	echo "[$(date)] -- INFO  -- running linter on ${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_CONTAINERFILES[*]}"
 	linter "${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_CONTAINERFILES[@]}"
 }
