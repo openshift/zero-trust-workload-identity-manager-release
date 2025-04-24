@@ -46,4 +46,3 @@ LABEL name="zero-trust-workload-identity-manager/spiffe-spire-controller-manager
       io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}"
 
 ENTRYPOINT ["/spire-controller-manager"]
-CMD []
