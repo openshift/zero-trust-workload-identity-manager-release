@@ -6,6 +6,11 @@ WORKDIR ${SOURCE_DIR}
 COPY spiffe-spire .
 COPY spiffe-spire/LICENSE /licenses/.
 
+# 1. Clean up .go-version and go.mod to support Go 1.23.6
+RUN echo "1.23.6" > .go-version && \
+    sed -i '/^tool /d' go.mod && \
+    sed -i 's/^go 1\.24\.1$/go 1.23.6/' go.mod
+
 ENV CGO_ENABLED=1
 ENV GOFLAGS=""
 ENV GO_BUILD_TAGS=strictfipsruntime,openssl

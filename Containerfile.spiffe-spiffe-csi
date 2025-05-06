@@ -12,6 +12,8 @@ ENV GOEXPERIMENT=strictfipsruntime
 ENV CGO_ENABLED=1
 ENV GOFLAGS=""
 
+RUN sed -i 's/^go 1\.24/go 1.23/' go.mod
+
 RUN go build -o bin/spiffe-csi-driver -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spiffe-csi-driver/main.go
 
 FROM registry.redhat.io/rhel9-4-els/rhel:9.4

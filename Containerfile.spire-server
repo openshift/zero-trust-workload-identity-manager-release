@@ -20,6 +20,12 @@ ENV GOCACHE=/go-cache
 ENV GOMODCACHE=/go-mod
 RUN mkdir -p ${GOTMPDIR} ${GOCACHE} ${GOMODCACHE}
 
+# 1. Clean up .go-version and go.mod to support Go 1.23.6
+RUN echo "1.23.6" > .go-version && \
+    sed -i '/^tool /d' go.mod && \
+    sed -i 's/^go 1\.24\.1$/go 1.23.6/' go.mod
+
+
 # Build the binary and clean up Go build artifacts to free up space
 RUN go build -o bin/spire-server -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spire-server/main.go \
     && go clean -cache -modcache -i -r \

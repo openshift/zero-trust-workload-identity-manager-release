@@ -28,8 +28,6 @@ outside the main code repository for better management.
 - [spiffe-spire](https://github.com/openshift/spiffe-spire)
 - [spiffe-spire-controller-manager](https://github.com/openshift/spiffe-spire-controller-manager)
 - [spiffe-spiffe-csi](https://github.com/openshift/spiffe-spiffe-csi)
-- [spiffe-spiffe-helper](https://github.com/openshift/spiffe-spiffe-helper)
-- [spiffe-go-spiffe](https://github.com/openshift/spiffe-go-spiffe)
 
 In each release branch the git submodules are configured with equivalent release branch in their respective origin
 repositories. And when switching the parent repository between different branches, the submodule branches will not be
