@@ -5,7 +5,6 @@ zero_trust_workload_identity_manager_containerfile_name = Containerfile.zero-tru
 zero_trust_workload_identity_manager_bundle_containerfile_name = Containerfile.zero-trust-workload-identity-manager.bundle
 
 spiffe_spire_submodule_dir = spiffe-spire
-spiffe_spire_containerfile_name = Containerfile.spiffe-spire
 
 spiffe_spire_controller_manager_submodule_dir = spiffe-spire-controller-manager
 spiffe_spire_controller_manager_containerfile_name = Containerfile.spiffe-spire-controller-manager
@@ -67,13 +66,11 @@ SPIFFE_SPIFFE_CSI_IMAGE ?= spiffe-spiffe-csi
 
 
 ## image version to tag the created images with.
-IMAGE_VERSION ?= $(release_version)
+IMAGE_VERSION ?= 0.1.0
 
-## image tag makes use of the branch name and
-## when branch name is `main` use `latest` as the tag.
-ifeq ($(release_version), main)
-IMAGE_VERSION = latest
-endif
+SPIFFE_SPIRE_IMAGE_VERSION ?= v1.12.0
+SPIFFE_CSI_IMAGE_VERSION ?= v0.2.7
+SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION ?= v0.6.2
 
 ## args to pass during image build
 IMAGE_BUILD_ARGS ?= --build-arg RELEASE_VERSION=$(release_version) --build-arg COMMIT_SHA=$(commit_sha) --build-arg SOURCE_URL=$(source_url)
@@ -133,40 +130,34 @@ build-operator-image:
 ## build spiffe-csi image.
 .PHONY: build-spiffe-csi-image
 build-spiffe-csi-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_csi_containerfile_name) -t $(SPIFFE_SPIFFE_CSI_IMAGE):$(IMAGE_VERSION) .
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_csi_containerfile_name) -t $(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) .
 
 ## build all operand images
 .PHONY: build-operand-images
-build-operand-images: build-spiffe-spire-image
+build-operand-images: build-spiffe-csi-image build-spire-agent-image build-spire-controller-manager-image build-spire-server-image build-spire-oidc-discovery-provider-image
 
 ## build operator bundle image.
 .PHONY: build-bundle-image
 build-bundle-image:
 	$(IMAGE_BUILD_CMD) -f $(zero_trust_workload_identity_manager_bundle_containerfile_name) -t $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION) .
 
-## build operand spiffe-spire image.
-.PHONY: build-spiffe-spire-image
-build-spiffe-spire-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_containerfile_name) -t $(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) .
-
-
 ## build operand spire-controller-manager image.
 .PHONY: build-spire-controller-manager-image
 build-spire-controller-manager-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_controller_manager_containerfile_name) -t $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) .
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_controller_manager_containerfile_name) -t $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION) .
 
 ## build operand spire-controller-manager image.
 .PHONY: build-spire-server-image
 build-spire-server-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_server_containerfile_name) -t $(SPIFFE_SPIRE_SERVER_IMAGE):$(IMAGE_VERSION) .
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_server_containerfile_name) -t $(SPIFFE_SPIRE_SERVER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
 
 .PHONY: build-spire-agent-image
 build-spire-agent-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_agent_containerfile_name) -t $(SPIFFE_SPIRE_AGENT_IMAGE):$(IMAGE_VERSION) .
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_agent_containerfile_name) -t $(SPIFFE_SPIRE_AGENT_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
 
 .PHONY: build-spire-oidc-discovery-provider-image
 build-spire-oidc-discovery-provider-image:
-	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_oidc_discovery_provider_containerfile_name) -t $(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(IMAGE_VERSION) .
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_oidc_discovery_provider_containerfile_name) -t $(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
 
 ## check shell scripts.
 .PHONY: verify-shell-scripts
@@ -189,11 +180,16 @@ update: update-submodules
 ## clean up temp dirs, images.
 .PHONY: clean
 clean:
-	podman rmi -i $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE):$(IMAGE_VERSION) \
-$(SPIFFE_SPIRE_IMAGE):$(IMAGE_VERSION) \
-$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) \
-$(SPIFFE_SPIFFE_CSI_IMAGE):$(IMAGE_VERSION) \
-$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)
+	$(CONTAINER_ENGINE) rmi \
+		$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE):$(IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_SERVER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_AGENT_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) \
+		$(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) \
+		$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)
+
+
 
 ## validate renovate config.
 .PHONY: validate-renovate-config

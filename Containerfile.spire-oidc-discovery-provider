@@ -7,7 +7,12 @@ WORKDIR ${SOURCE_DIR}
 COPY spiffe-spire .
 COPY spiffe-spire/LICENSE /licenses/.
 
-# 3. Build the entire package (not just main.go)
+# 1. Clean up .go-version and go.mod to support Go 1.23.6
+RUN echo "1.23.6" > .go-version && \
+    sed -i '/^tool /d' go.mod && \
+    sed -i 's/^go 1\.24\.1$/go 1.23.6/' go.mod
+
+# 2. Build the binary
 ENV CGO_ENABLED=1
 ENV GOFLAGS=""
 ENV GO_BUILD_TAGS=strictfipsruntime,openssl
@@ -15,6 +20,7 @@ ENV GOEXPERIMENT=strictfipsruntime
 
 RUN go build -o bin/oidc-discovery-provider -ldflags '-w -s' -tags ${GO_BUILD_TAGS} ./support/oidc-discovery-provider
 
+# Stage 2: Minimal runtime image
 FROM registry.redhat.io/rhel9-4-els/rhel:9.4
 
 ARG RELEASE_VERSION
