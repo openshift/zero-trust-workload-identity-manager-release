@@ -18,6 +18,9 @@ spiffe_spire_oidc_discovery_provider_containerfile_name = Containerfile.spire-oi
 spiffe_spiffe_csi_submodule_dir = spiffe-spiffe-csi
 spiffe_spiffe_csi_containerfile_name = Containerfile.spiffe-spiffe-csi
 
+spiffe_spiffe_helper_submodule_dir = spiffe-spiffe-helper
+spiffe_spiffe_helper_containerfile_name = Containerfile.spiffe-spiffe-helper
+
 
 commit_sha = $(strip $(shell git rev-parse HEAD))
 source_url = $(strip $(shell git remote get-url origin))
@@ -64,6 +67,9 @@ SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE ?= spire-oidc-discovery-provider
 ## image name for spiffe-spiffe-csi.
 SPIFFE_SPIFFE_CSI_IMAGE ?= spiffe-spiffe-csi
 
+## image name for spiffe-spiffe-helper
+SPIFFE_SPIFFE_HELPER_IMAGE ?= spiffe-spiffe-helper
+
 
 ## image version to tag the created images with.
 IMAGE_VERSION ?= 0.1.0
@@ -71,6 +77,7 @@ IMAGE_VERSION ?= 0.1.0
 SPIFFE_SPIRE_IMAGE_VERSION ?= v1.12.0
 SPIFFE_CSI_IMAGE_VERSION ?= v0.2.7
 SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION ?= v0.6.2
+SPIFFE_SPIFFE_HELPER_IMAGE_VERSION ?= v0.10.0
 
 ## args to pass during image build
 IMAGE_BUILD_ARGS ?= --build-arg RELEASE_VERSION=$(release_version) --build-arg COMMIT_SHA=$(commit_sha) --build-arg SOURCE_URL=$(source_url)
@@ -116,6 +123,7 @@ update-submodules:
 	git submodule update --remote $(spiffe_spire_submodule_dir)
 	git submodule update --remote $(spiffe_spire_controller_manager_submodule_dir)
 	git submodule update --remote $(spiffe_spiffe_csi_submodule_dir)
+	git submodule update --remote $(spiffe_spiffe_helper_submodule_dir)
 	git submodule update --remote $(zero_trust_workload_identity_manager_submodule_dir)
 
 ## build all the images - operator, operand and operator-bundle.
@@ -132,9 +140,14 @@ build-operator-image:
 build-spiffe-csi-image:
 	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_csi_containerfile_name) -t $(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) .
 
+## build spiffe-helper image.
+.PHONY: build-spiffe-helpfer-image
+build-spiffe-helpfer-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_helper_containerfile_name) -t $(SPIFFE_SPIFFE_HELPER_IMAGE):$(SPIFFE_SPIFFE_HELPER_IMAGE_VERSION) .
+
 ## build all operand images
 .PHONY: build-operand-images
-build-operand-images: build-spiffe-csi-image build-spire-agent-image build-spire-controller-manager-image build-spire-server-image build-spire-oidc-discovery-provider-image
+build-operand-images: build-spiffe-csi-image build-spiffe-helpfer-image build-spire-agent-image build-spire-controller-manager-image build-spire-server-image build-spire-oidc-discovery-provider-image
 
 ## build operator bundle image.
 .PHONY: build-bundle-image
@@ -187,6 +200,7 @@ clean:
 		$(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
 		$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(IMAGE_VERSION) \
 		$(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) \
+		$(SPIFFE_SPIFFE_HELPER_IMAGE):$(SPIFFE_SPIFFE_HELPER_IMAGE_VERSION) \
 		$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)
 
 
