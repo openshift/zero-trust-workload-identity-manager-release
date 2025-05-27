@@ -14,7 +14,3 @@
 	path = zero-trust-workload-identity-manager
 	url = https://github.com/openshift/zero-trust-workload-identity-manager.git
 	branch = main
-[submodule "spiffe-spiffe-helper"]
-	path = spiffe-spiffe-helper
-	url = https://github.com/openshift/spiffe-spiffe-helper.git
-	branch = release-0.10.0
