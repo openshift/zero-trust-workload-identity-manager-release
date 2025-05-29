@@ -28,7 +28,8 @@ ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spire"
 COPY --from=builder ${SOURCE_DIR}/bin/spire-agent /spire-agent
 COPY --from=builder /licenses /licenses
 
-USER 65534:65534
+# Run as root user
+USER 0:0
 
 LABEL com.redhat.component="spire-agent-container" \
       name="zero-trust-workload-identity-manager/spiffe-spire-agent-rhel9" \
@@ -45,4 +46,4 @@ LABEL com.redhat.component="spire-agent-container" \
       io.k8s.display-name="SPIRE Agent" \
       io.k8s.description="Container image for the SPIRE Agent component, responsible for workload authentication"
 
-ENTRYPOINT ["/spire-agent"]
+ENTRYPOINT ["/spire-agent", "run"]
