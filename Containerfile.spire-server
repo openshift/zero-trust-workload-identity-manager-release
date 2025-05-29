@@ -63,4 +63,4 @@ LABEL com.redhat.component="spire-server-container" \
       io.k8s.description="Container image for the SPIRE Server component, managing trust and identities in SPIFFE/SPIRE systems"
 
 # Entrypoint
-ENTRYPOINT ["/spire-server"]
+ENTRYPOINT ["/spire-server", "run"]
