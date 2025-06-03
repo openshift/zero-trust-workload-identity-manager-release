@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/openshift/zero-trust-workload-identity-manager-release?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/cancel-in-progress: "false"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
+      == "main"
+  creationTimestamp: null
+  labels:
+    appstudio.openshift.io/application: zero-trust-workload-identity-manager-index-4-18
+    appstudio.openshift.io/component: zero-trust-workload-identity-manager-index-4-18
+    pipelines.appstudio.openshift.io/type: build
+  name: zero-trust-workload-identity-manager-index-4-18-on-push
+  namespace: zero-trust-workload-tenant
+spec:
+  params:
+  - name: git-url
+    value: '{{source_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: output-image
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/zero-trust-workload-identity-manager-4-18/zero-trust-workload-identity-manager-index-4-18:{{revision}}
+  - name: dockerfile
+    value: Containerfile
+  - name: path-context
+    value: catalogs/v4.18
+  - name: build-args
+    value: []
+  pipelineRef:
+    name: fbc-build-pipeline
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-zero-trust-workload-identity-manager-index-4-18
+  workspaces:
+  - name: git-auth
+    secret:
+      secretName: '{{ git_auth_secret }}'
+status: {}

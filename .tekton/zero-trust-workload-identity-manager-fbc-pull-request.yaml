@@ -1,0 +1,44 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  annotations:
+    build.appstudio.openshift.io/repo: https://github.com/openshift/zero-trust-workload-identity-manager-release?rev={{revision}}
+    build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
+    build.appstudio.redhat.com/target_branch: '{{target_branch}}'
+    pipelinesascode.tekton.dev/cancel-in-progress: "true"
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
+      == "main"
+  creationTimestamp: null
+  labels:
+    appstudio.openshift.io/application: zero-trust-workload-identity-manager-fbc
+    appstudio.openshift.io/component: zero-trust-workload-identity-manager-fbc
+    pipelines.appstudio.openshift.io/type: build
+  name: zero-trust-workload-identity-manager-fbc-on-pull-request
+  namespace: zero-trust-workload-tenant
+spec:
+  params:
+  - name: git-url
+    value: '{{source_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: output-image
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/zero-trust-workload-identity-manager-fbc/zero-trust-workload-identity-manager-fbc:on-pr-{{revision}}
+  - name: image-expires-after
+    value: 5d
+  - name: dockerfile
+    value: Containerfile.catalog
+  - name: path-context
+    value: .
+  - name: build-args
+    value: []
+  pipelineRef:
+    name: fbc-build-pipeline
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-zero-trust-workload-identity-manager-fbc
+  workspaces:
+  - name: git-auth
+    secret:
+      secretName: '{{ git_auth_secret }}'
+status: {}
