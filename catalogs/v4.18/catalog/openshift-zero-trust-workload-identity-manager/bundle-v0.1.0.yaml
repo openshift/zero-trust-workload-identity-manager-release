@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:956bf645a3a8eb1e32279a040b7adf0000117530a7a80d58fe13c61dce36134c
+image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:e66acdb3dcaf92a0ffa9f98f7355fa25f800891ff78098f21a7a6fcb6209b79e
 name: zero-trust-workload-identity-manager.v0.1.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -70,7 +70,7 @@ properties:
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
       containerImage: ""
-      createdAt: 2025-06-03T05:27:01
+      createdAt: 2025-06-10T15:40:39
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -156,8 +156,8 @@ properties:
     provider:
       name: Red Hat
 relatedImages:
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:956bf645a3a8eb1e32279a040b7adf0000117530a7a80d58fe13c61dce36134c
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:e66acdb3dcaf92a0ffa9f98f7355fa25f800891ff78098f21a7a6fcb6209b79e
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:90ad7cf82950654c7a69a95dff13c8e7a211260bb284c24d7f6753832c2255fa
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:4f8cecc915e78b9c9ab82567f3f377b3287bf6718f80d2dc8da79a5d84d44a93
   name: ""
 schema: olm.bundle
