@@ -1,27 +1,27 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:e66acdb3dcaf92a0ffa9f98f7355fa25f800891ff78098f21a7a6fcb6209b79e
+image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:f4fc80cb9dab98a29d91fd1bbf864e45ecf4035b8d9715c874ccd74c2354f76d
 name: zero-trust-workload-identity-manager.v0.1.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
 - type: olm.gvk
   value:
     group: operator.openshift.io
-    kind: SpiffeCSIDriverConfig
+    kind: SpiffeCSIDriver
     version: v1alpha1
 - type: olm.gvk
   value:
     group: operator.openshift.io
-    kind: SpireAgentConfig
+    kind: SpireAgent
     version: v1alpha1
 - type: olm.gvk
   value:
     group: operator.openshift.io
-    kind: SpireOIDCDiscoveryProviderConfig
+    kind: SpireOIDCDiscoveryProvider
     version: v1alpha1
 - type: olm.gvk
   value:
     group: operator.openshift.io
-    kind: SpireServerConfig
+    kind: SpireServer
     version: v1alpha1
 - type: olm.gvk
   value:
@@ -70,7 +70,7 @@ properties:
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
       containerImage: ""
-      createdAt: 2025-06-10T15:40:39
+      createdAt: 2025-06-11T12:38:59
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -100,22 +100,22 @@ properties:
       - kind: ClusterStaticEntry
         name: clusterstaticentries.spire.spiffe.io
         version: v1alpha1
-      - kind: SpiffeCSIDriverConfig
-        name: spiffecsidriverconfigs.operator.openshift.io
+      - kind: SpiffeCSIDriver
+        name: spiffecsidrivers.operator.openshift.io
         version: v1alpha1
-      - kind: SpireAgentConfig
-        name: spireagentconfigs.operator.openshift.io
+      - kind: SpireAgent
+        name: spireagents.operator.openshift.io
         version: v1alpha1
-      - kind: SpireOIDCDiscoveryProviderConfig
-        name: spireoidcdiscoveryproviderconfigs.operator.openshift.io
+      - kind: SpireOIDCDiscoveryProvider
+        name: spireoidcdiscoveryproviders.operator.openshift.io
         version: v1alpha1
-      - kind: SpireServerConfig
-        name: spireserverconfigs.operator.openshift.io
+      - kind: SpireServer
+        name: spireservers.operator.openshift.io
         version: v1alpha1
       - kind: ZeroTrustWorkloadIdentityManager
         name: zerotrustworkloadidentitymanagers.operator.openshift.io
         version: v1alpha1
-    description: The Zero Trust Workload Identity Manager is a Openshift Day-2 Operator
+    description: The Zero Trust Workload Identity Manager is an Openshift Day-2 Operator
       designed to automate the setup and management of SPIFFE/SPIRE components (like
       spire-server, spire-agent, spiffe-csi-driver, and oidc-discovery-provider) within
       OpenShift clusters. It enables zero-trust security by dynamically issuing and
@@ -156,8 +156,8 @@ properties:
     provider:
       name: Red Hat
 relatedImages:
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:e66acdb3dcaf92a0ffa9f98f7355fa25f800891ff78098f21a7a6fcb6209b79e
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:f4fc80cb9dab98a29d91fd1bbf864e45ecf4035b8d9715c874ccd74c2354f76d
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:4f8cecc915e78b9c9ab82567f3f377b3287bf6718f80d2dc8da79a5d84d44a93
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:cfaa098ea04661d2806e3ad1c472868c84c5aa62f264a9d62452e66d2b5d092c
   name: ""
 schema: olm.bundle
