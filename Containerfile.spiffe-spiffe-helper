@@ -7,7 +7,7 @@ WORKDIR ${SOURCE_DIR}
 COPY spiffe-spiffe-helper .
 COPY spiffe-spiffe-helper/LICENSE /licenses/.
 
-ENV CGO_ENABLED=0
+ENV CGO_ENABLED=1
 ENV GO_BUILD_TAGS=strictfipsruntime,openssl
 ENV GOEXPERIMENT=strictfipsruntime
 ENV GOFLAGS=""
