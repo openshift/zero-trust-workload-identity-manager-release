@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:6ba6d877040e01b2cb3254e2fad3c4d2f3541ebaea9478c657537c9f363fd0a1
+image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:bba7b4550514c43e8a6cae2c6f74e18fe51b05892ff18a091f15462134aba1b9
 name: zero-trust-workload-identity-manager.v0.1.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -69,8 +69,8 @@ properties:
         ]
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
-      containerImage: ""
-      createdAt: 2025-06-14T07:22:27
+      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:17f533beea953c0a41b4c0a15a6bfd1f959565361509ec521fa43281a4c08e2a
+      createdAt: 2025-06-14T13:22:51
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -172,8 +172,8 @@ relatedImages:
   name: spire-oidc-discovery-provider
 - image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:6b41e90018d9d2b56af60eff7547c9872dbe1e92f2521d04920450f49147bdc1
   name: spire-server
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:6ba6d877040e01b2cb3254e2fad3c4d2f3541ebaea9478c657537c9f363fd0a1
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:bba7b4550514c43e8a6cae2c6f74e18fe51b05892ff18a091f15462134aba1b9
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:9aa7b0a9a240d2930d2dc43f689a8a5019041a2a78e8c7569ccedce15f7d2f5c
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:17f533beea953c0a41b4c0a15a6bfd1f959565361509ec521fa43281a4c08e2a
   name: ""
 schema: olm.bundle
