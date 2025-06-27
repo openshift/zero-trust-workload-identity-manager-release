@@ -21,6 +21,31 @@ spec:
           - name: kind
             value: task
         resolver: bundles
+    - name: slack-webhook-notification
+      params:
+        - name: message
+          value: |-
+            :konflux: :$(tasks.status): PipelineRun :$(tasks.status): <https://console-openshift-console.apps.stone-prd-rh01.pg1f.p1.openshiftapps.com/k8s/ns/zero-trust-workload-tenant/tekton.dev~v1~PipelineRun/$(context.pipelineRun.name)|$(context.pipelineRun.name)> (`$(params.output-image)`, revision <$(params.git-url)/commit/$(params.revision)|$(params.revision)>)
+        - name: secret-name
+          value: "rh-internal-slack-webhook"
+        - name: key-name
+          value: "channel-ocp-oap-qe"
+      taskRef:
+        params:
+          - name: bundle
+            value: quay.io/konflux-ci/tekton-catalog/task-slack-webhook-notification:0.1@sha256:dc17b70633363d78414b8c06dc1660d25742935f106a6116995638e1210c2730
+          - name: name
+            value: slack-webhook-notification
+          - name: kind
+            value: task
+        resolver: bundles
+      when:
+        - input: $(tasks.status)
+          operator: in
+          values: ["Failed", "Succeeded"]
+        - input: $(params.image-expires-after)
+          operator: in
+          values: [""]
   params:
     - description: Source Repository URL
       name: git-url
