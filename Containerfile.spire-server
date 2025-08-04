@@ -1,5 +1,5 @@
 # Build stage using Red Hat's Golang builder image
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.23 AS builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.24 AS builder
 
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spire"
 WORKDIR ${SOURCE_DIR}
@@ -19,11 +19,6 @@ ENV GOTMPDIR=/go-tmp
 ENV GOCACHE=/go-cache
 ENV GOMODCACHE=/go-mod
 RUN mkdir -p ${GOTMPDIR} ${GOCACHE} ${GOMODCACHE}
-
-# 1. Clean up .go-version and go.mod to support Go 1.23.6
-RUN echo "1.23.6" > .go-version && \
-    sed -i '/^tool /d' go.mod && \
-    sed -i 's/^go 1\.24\.1$/go 1.23.6/' go.mod
 
 
 # Build the binary and clean up Go build artifacts to free up space

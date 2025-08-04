@@ -1,5 +1,5 @@
 # Build stage using Red Hat's Golang builder image
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.23 AS builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.24 AS builder
 
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-csi"
 
@@ -11,8 +11,6 @@ ENV GO_BUILD_TAGS=strictfipsruntime,openssl
 ENV GOEXPERIMENT=strictfipsruntime
 ENV CGO_ENABLED=1
 ENV GOFLAGS=""
-
-RUN sed -i 's/^go 1\.24/go 1.23/' go.mod
 
 RUN go build -o bin/spiffe-csi-driver -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spiffe-csi-driver/main.go
 

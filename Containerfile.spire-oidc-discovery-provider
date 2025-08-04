@@ -1,4 +1,4 @@
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.23 AS builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.24 AS builder
 
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spire"
 WORKDIR ${SOURCE_DIR}
@@ -6,11 +6,6 @@ WORKDIR ${SOURCE_DIR}
 # Copy source code and licenses
 COPY spiffe-spire .
 COPY spiffe-spire/LICENSE /licenses/.
-
-# 1. Clean up .go-version and go.mod to support Go 1.23.6
-RUN echo "1.23.6" > .go-version && \
-    sed -i '/^tool /d' go.mod && \
-    sed -i 's/^go 1\.24\.1$/go 1.23.6/' go.mod
 
 # 2. Build the binary
 ENV CGO_ENABLED=1
