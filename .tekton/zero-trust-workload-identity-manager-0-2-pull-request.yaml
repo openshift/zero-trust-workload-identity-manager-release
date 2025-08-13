@@ -9,15 +9,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "release-0.2" && (".tekton/zero-trust-workload-identity-manager-bundle-0-2-pull-request.yaml".pathChanged()
-      || "Containerfile.zero-trust-workload-identity-manager.bundle".pathChanged() || "images_digest.conf".pathChanged()
-      || "hack/bundle/render_templates.sh".pathChanged())
+      == "release-0.2" && (".tekton/zero-trust-workload-identity-manager-0-2-pull-request.yaml".pathChanged() 
+      || "Containerfile.zero-trust-workload-identity-manager".pathChanged() || "zero-trust-workload-identity-manager/***".pathChanged())
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: zero-trust-workload-identity-manager-bundle-0-2
-    appstudio.openshift.io/component: zero-trust-workload-identity-manager-bundle-0-2
+    appstudio.openshift.io/application: zero-trust-workload-identity-manager-0-2
+    appstudio.openshift.io/component: zero-trust-workload-identity-manager-0-2
     pipelines.appstudio.openshift.io/type: build
-  name: zero-trust-workload-identity-manager-bundle-0-2-on-pull-request
+  name: zero-trust-workload-identity-manager-0-2-on-pull-request
   namespace: zero-trust-workload-tenant
 spec:
   params:
@@ -26,11 +25,11 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/zero-trust-workload-identity-manager-bundle-0-2/zero-trust-workload-identity-manager-bundle-0-2:on-pr-{{revision}}
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/zero-trust-workload-identity-manager-0-2/zero-trust-workload-identity-manager-0-2:on-pr-{{revision}}
   - name: image-expires-after
     value: 5d
   - name: dockerfile
-    value: Containerfile.zero-trust-workload-identity-manager.bundle
+    value: Containerfile.zero-trust-workload-identity-manager
   - name: path-context
     value: .
   - name: build-args
@@ -39,11 +38,11 @@ spec:
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
   - name: prefetch-input
-    value: '{"type": "gomod", "path": "."}'
+    value: '{"type": "gomod", "path": "zero-trust-workload-identity-manager"}'
   pipelineRef:
-    name: single-arch-build-pipeline
+    name: multi-arch-build-pipeline
   taskRunTemplate:
-    serviceAccountName: build-pipeline-zero-trust-workload-identity-manager-bundle-0-2
+    serviceAccountName: build-pipeline-zero-trust-workload-identity-manager-0-2
   workspaces:
   - name: git-auth
     secret:
