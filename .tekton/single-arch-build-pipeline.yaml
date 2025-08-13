@@ -86,14 +86,6 @@ spec:
           VMs
         name: privileged-nested
         type: string
-      - default: ""
-        description: Snyk Organization ID
-        name: snyk-org-id
-        type: string
-      - default: ""
-        description: Snyk Project Name
-        name: snyk-proj-name
-        type: string
     results:
       - description: ""
         name: IMAGE_URL
@@ -336,8 +328,6 @@ spec:
             value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
           - name: CACHI2_ARTIFACT
             value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
-          - name: ARGS
-            value: --project-name=$(params.snyk-proj-name) --report --org=$(params.snyk-org-id)
         runAfter:
           - build-image-index
         taskRef:
