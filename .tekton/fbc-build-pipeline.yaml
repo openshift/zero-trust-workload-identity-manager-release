@@ -22,6 +22,30 @@ spec:
       - name: kind
         value: task
       resolver: bundles
+  - name: slack-webhook-notification
+      params:
+      - name: message
+        value: ":konflux: :$(tasks.status): PipelineRun $(tasks.status) <$(params.console-url)/k8s/ns/$(context.pipelineRun.namespace)/tekton.dev~v1~PipelineRun/$(context.pipelineRun.name)|$(context.pipelineRun.name)> (`$(params.output-image)`, revision <$(params.git-url)/commit/$(params.revision)|$(params.revision)>)"
+      - name: secret-name
+        value: "$(params.slack-secret-name)"
+      - name: key-name
+        value: "$(params.slack-secret-key)"
+    taskRef:
+      params:
+      - name: name
+        value: slack-webhook-notification
+      - name: bundle
+        value: quay.io/konflux-ci/tekton-catalog/task-slack-webhook-notification:0.1@sha256:dc17b70633363d78414b8c06dc1660d25742935f106a6116995638e1210c2730
+      - name: kind
+        value: task
+      resolver: bundles
+    when:
+    - input: $(tasks.status)
+      operator: in
+      values: ["Failed", "Succeeded", "Completed"]
+    - input: '{{event_type}}'
+      operator: in
+      values: ["push", "incoming"]
   params:
   - description: Source Repository URL
     name: git-url
@@ -90,6 +114,18 @@ spec:
       set of values is determined by the configuration of the multi-platform-controller.
     name: build-platforms
     type: array
+  - default: "https://console-openshift-console.apps.stone-prd-rh01.pg1f.p1.openshiftapps.com"
+    description: Konflux Console URL
+    name: console-url
+    type: string
+  - default: "rh-internal-slack-webhook"
+    description: Secret with least one key where value is webhook URL for Slack (Should be created in the Konflux namespace where the pipeline is running)
+    name: slack-secret-name
+    type: string
+  - default: "channel-ocp-oap-qe"
+    description: Key in the Secret which contains webhook URL for Slack
+    name: slack-secret-key
+    type: string
   results:
   - description: ""
     name: IMAGE_URL
