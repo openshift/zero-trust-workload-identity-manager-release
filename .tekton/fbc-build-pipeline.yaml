@@ -23,13 +23,13 @@ spec:
         value: task
       resolver: bundles
   - name: slack-webhook-notification
-      params:
-      - name: message
-        value: ":konflux: :$(tasks.status): PipelineRun $(tasks.status) <$(params.console-url)/k8s/ns/$(context.pipelineRun.namespace)/tekton.dev~v1~PipelineRun/$(context.pipelineRun.name)|$(context.pipelineRun.name)> (`$(params.output-image)`, revision <$(params.git-url)/commit/$(params.revision)|$(params.revision)>)"
-      - name: secret-name
-        value: "$(params.slack-secret-name)"
-      - name: key-name
-        value: "$(params.slack-secret-key)"
+    params:
+    - name: message
+      value: ":konflux: :$(tasks.status): PipelineRun $(tasks.status) <$(params.console-url)/k8s/ns/$(context.pipelineRun.namespace)/tekton.dev~v1~PipelineRun/$(context.pipelineRun.name)|$(context.pipelineRun.name)> (`$(params.output-image)`, revision <$(params.git-url)/commit/$(params.revision)|$(params.revision)>)"
+    - name: secret-name
+      value: "$(params.slack-secret-name)"
+    - name: key-name
+      value: "$(params.slack-secret-key)"
     taskRef:
       params:
       - name: name
