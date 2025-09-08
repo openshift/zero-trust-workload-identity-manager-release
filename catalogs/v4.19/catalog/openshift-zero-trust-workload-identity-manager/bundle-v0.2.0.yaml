@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:b62d090e99353efbcb4629a08d5d275d52953de3095a75a75cf701c8b36d43c0
+image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:8d20aec5dfb42c8e0bb662bf025b5aa18bad329e57c5cf83a45c0ff522cf31af
 name: zero-trust-workload-identity-manager.v0.2.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -69,8 +69,8 @@ properties:
         ]
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
-      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a38835d8334147bbb2a209f339313278208689627d0c50ac51a16c87783fd892
-      createdAt: 2025-09-03T17:12:27
+      containerImage: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a38835d8334147bbb2a209f339313278208689627d0c50ac51a16c87783fd892
+      createdAt: 2025-09-08T06:45:17
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -162,16 +162,16 @@ relatedImages:
   name: node-driver-registrar
 - image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-csi-driver-rhel9@sha256:a16ac0a4363f7cffada39a2f17aa42f5de3faf78b3688ae5ebf2ecf3a4759cb7
   name: spiffe-csi-driver
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-agent-rhel9@sha256:4073ef462525c2ea1326f3c44ec630e33cbab4b428e8314a85d38756c2460831
+  name: spire-agent
 - image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-controller-manager-rhel9@sha256:67f0e6670195c84515e7d78139a2951e463db11445740fe1d9a449a7f338556c
   name: spire-controller-manager
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-agent-rhel9@sha256:4073ef462525c2ea1326f3c44ec630e33cbab4b428e8314a85d38756c2460831
-  name: spire-agent
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-oidc-discovery-provider-rhel9@sha256:db862d85905dd175b8f7229062c2edcd70f7fe7fe413b2478fb1876eaf362837
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-oidc-discovery-provider-rhel9@sha256:db862d85905dd175b8f7229062c2edcd70f7fe7fe413b2478fb1876eaf362837
   name: spire-oidc-discovery-provider
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:9f9358798ac8aff496daa2fed09763e7bc97547fe3f3420b9de9f4d93d15b218
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:9f9358798ac8aff496daa2fed09763e7bc97547fe3f3420b9de9f4d93d15b218
   name: spire-server
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:b62d090e99353efbcb4629a08d5d275d52953de3095a75a75cf701c8b36d43c0
+- image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:8d20aec5dfb42c8e0bb662bf025b5aa18bad329e57c5cf83a45c0ff522cf31af
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a38835d8334147bbb2a209f339313278208689627d0c50ac51a16c87783fd892
+- image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a38835d8334147bbb2a209f339313278208689627d0c50ac51a16c87783fd892
   name: ""
 schema: olm.bundle
