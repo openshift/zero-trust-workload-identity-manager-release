@@ -19,6 +19,7 @@ RUN ./render_templates.sh /manifests /metadata /images_digest.conf
 FROM registry.redhat.io/rhel9-4-els/rhel-minimal:9.4
 
 ARG RELEASE_VERSION
+ARG CPE
 ARG COMMIT_SHA
 ARG SOURCE_URL
 
@@ -30,6 +31,7 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-containe
       distribution-scope="public" \
       release="${RELEASE_VERSION}" \
       version="${RELEASE_VERSION}" \
+      cpe="${CPE}" \
       url="${SOURCE_URL}" \
       maintainer="Red Hat, Inc." \
       vendor="Red Hat, Inc." \
