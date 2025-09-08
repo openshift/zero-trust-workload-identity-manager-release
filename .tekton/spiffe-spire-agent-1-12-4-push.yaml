@@ -32,6 +32,7 @@ spec:
   - name: build-args
     value:
       - RELEASE_VERSION=v1.12.4
+      - CPE=cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
   - name: prefetch-input

@@ -30,6 +30,7 @@ RUN go build -o bin/spire-server -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spi
 FROM registry.redhat.io/rhel9-4-els/rhel:9.4
 
 ARG RELEASE_VERSION
+ARG CPE
 ARG COMMIT_SHA
 ARG SOURCE_URL
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spire"
@@ -50,6 +51,7 @@ LABEL com.redhat.component="spire-server-container" \
       description="SPIRE Server manages SPIFFE identities and issues SVIDs to workloads via the SPIRE Agent" \
       vendor="Red Hat, Inc." \
       release="${RELEASE_VERSION}" \
+      cpe="${CPE}" \
       io.openshift.tags="spire,identity,spiffe,security" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
       io.openshift.build.source-location="${SOURCE_URL}" \
