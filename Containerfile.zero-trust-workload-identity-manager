@@ -38,6 +38,7 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-container" \
       io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
       io.openshift.tags="spire,identity,spiffe,security" \
       io.k8s.display-name="openshift-zero-trust-workload-identity-manager" \
-      io.k8s.description="zero-trust-workload-identity-manager-container"
+      io.k8s.description="zero-trust-workload-identity-manager-container" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.2::el9"
 
 ENTRYPOINT ["/usr/bin/zero-trust-workload-identity-manager"]
