@@ -24,7 +24,8 @@ ARG SOURCE_URL
 
 # Core bundle labels.
 LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-container" \
-      name="zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-bundle" \
+      name="zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9" \
       summary="zero trust identity manager" \
       description="zero trust identity manager" \
       distribution-scope="public" \
