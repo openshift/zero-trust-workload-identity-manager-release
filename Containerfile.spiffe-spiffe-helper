@@ -38,6 +38,7 @@ LABEL name="zero-trust-workload-identity-manager/spiffe-helper-rhel9" \
       maintainer="Red Hat, Inc." \
       vendor="Red Hat, Inc." \
       com.redhat.component="spiffe-helper-container" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9" \
       io.k8s.display-name="SPIFFE Helper" \
       io.k8s.description="Helper binary for workload identity setup using SPIFFE/SPIRE." \
       io.openshift.tags="spiffe,spire,helper,security,identity" \
