@@ -55,6 +55,7 @@ LABEL com.redhat.component="spire-server-container" \
       description="SPIRE Server manages SPIFFE identities and issues SVIDs to workloads via the SPIRE Agent" \
       vendor="Red Hat, Inc." \
       release="${RELEASE_VERSION}" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9" \
       io.openshift.tags="spire,identity,spiffe,security" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
       io.openshift.build.source-location="${SOURCE_URL}" \
