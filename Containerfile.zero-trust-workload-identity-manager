@@ -32,6 +32,7 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-container" \
       description="zero-trust-workload-identity-manager-container" \
       vendor="Red Hat, Inc." \
       release="${RELEASE_VERSION}" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9" \
       io.openshift.expose-services="" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
       io.openshift.build.source-location="${SOURCE_URL}" \
