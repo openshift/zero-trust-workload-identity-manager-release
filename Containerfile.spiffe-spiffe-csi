@@ -40,6 +40,7 @@ LABEL com.redhat.component="spiffe-csi-driver-container" \
       description="SPIFFE CSI Driver for securely provisioning workload identities in openshift using CSI" \
       vendor="Red Hat, Inc." \
       release="${RELEASE_VERSION}" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9" \
       io.openshift.expose-services="" \
       io.openshift.tags="csi,security,identity,spiffe,spire" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
