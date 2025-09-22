@@ -44,6 +44,7 @@ LABEL com.redhat.component="spire-agent-container" \
       io.openshift.build.source-location="${SOURCE_URL}" \
       io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
       io.k8s.display-name="SPIRE Agent" \
-      io.k8s.description="Container image for the SPIRE Agent component, responsible for workload authentication"
+      io.k8s.description="Container image for the SPIRE Agent component, responsible for workload authentication" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:0.1::el9"
 
 ENTRYPOINT ["/spire-agent", "run"]
