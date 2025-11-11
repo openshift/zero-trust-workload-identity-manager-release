@@ -16,7 +16,7 @@ ENV GOEXPERIMENT=strictfipsruntime
 RUN go build -o bin/oidc-discovery-provider -ldflags '-w -s' -tags ${GO_BUILD_TAGS} ./support/oidc-discovery-provider
 
 # Stage 2: Minimal runtime image
-FROM registry.redhat.io/rhel9-4-els/rhel:9.4
+FROM registry.redhat.io/ubi9/ubi-minimal
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
