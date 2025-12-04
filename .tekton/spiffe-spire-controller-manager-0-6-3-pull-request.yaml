@@ -10,7 +10,7 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
       == "release-1.0.0" && (".tekton/spiffe-spire-controller-manager-0-6-3-pull-request.yaml".pathChanged()
-      || "Containerfile.spiffe-spire-controller-manager".pathChanged() || "spiffe-spire-controller-manager/***".pathChanged())
+      || "Containerfile.spiffe-spire-controller-manager".pathChanged() || "spiffe-spire-controller-manager".pathChanged())
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: spiffe-spire-controller-manager-0-6-3

@@ -10,7 +10,7 @@ metadata:
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
       == "release-1.0.0" && (".tekton/zero-trust-workload-identity-manager-bundle-1-0-push.yaml".pathChanged()
       || "Containerfile.zero-trust-workload-identity-manager.bundle".pathChanged() || "images_digest.conf".pathChanged()
-      || "hack/bundle/render_templates.sh".pathChanged())
+      || "hack/bundle/render_templates.sh".pathChanged() || "zero-trust-workload-identity-manager".pathChanged())
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: zero-trust-workload-identity-manager-bundle-1-0
