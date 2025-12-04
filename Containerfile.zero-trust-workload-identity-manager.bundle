@@ -1,4 +1,4 @@
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.24 AS builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.25 AS builder
 
 COPY zero-trust-workload-identity-manager/bundle/manifests /manifests
 COPY zero-trust-workload-identity-manager/bundle/metadata /metadata
@@ -34,7 +34,7 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-containe
       maintainer="Red Hat, Inc." \
       vendor="Red Hat, Inc." \
       com.redhat.delivery.operator.bundle=true \
-      com.redhat.openshift.versions="v4.18-v4.19" \
+      com.redhat.openshift.versions="v4.18-v4.21" \
       io.openshift.expose-services="" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
       io.openshift.build.source-location="${SOURCE_URL}" \
@@ -47,8 +47,8 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-containe
       operators.operatorframework.io.bundle.manifests.v1=manifests/ \
       operators.operatorframework.io.bundle.metadata.v1=metadata/ \
       operators.operatorframework.io.bundle.package.v1="openshift-zero-trust-workload-identity-manager" \
-      operators.operatorframework.io.bundle.channel.default.v1="tech-preview-v0.2" \
-      operators.operatorframework.io.bundle.channels.v1="tech-preview-v0.2" \
+      operators.operatorframework.io.bundle.channel.default.v1="stable-v1" \
+      operators.operatorframework.io.bundle.channels.v1="stable-v1" \
       operators.operatorframework.io.metrics.builder="operator-sdk-v1.25.1" \
       operators.operatorframework.io.metrics.mediatype.v1="metrics+v1" \
       operators.operatorframework.io.metrics.project_layout="go.kubebuilder.io/v3"
