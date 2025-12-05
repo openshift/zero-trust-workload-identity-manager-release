@@ -11,7 +11,6 @@ declare SPIRE_AGENT_IMAGE
 declare SPIFFE_CSI_DRIVER_IMAGE
 declare SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE
 declare SPIRE_CONTROLLER_MANAGER_IMAGE
-declare SPIFFE_HELPER_IMAGE
 declare NODE_DRIVER_REGISTRAR_IMAGE
 declare SPIFFE_CSI_INIT_CONTAINER_IMAGE
 
@@ -45,7 +44,6 @@ update_csv_manifest()
 	sed -i "s#ghcr.io/spiffe/spiffe-csi-driver.*#${SPIFFE_CSI_DRIVER_IMAGE}#g" "${CSV_FILE}"
 	sed -i "s#ghcr.io/spiffe/oidc-discovery-provider.*#${SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE}#g" "${CSV_FILE}"
 	sed -i "s#ghcr.io/spiffe/spire-controller-manager.*#${SPIRE_CONTROLLER_MANAGER_IMAGE}#g" "${CSV_FILE}"
-	sed -i "s#ghcr.io/spiffe/spiffe-helper.*#${SPIFFE_HELPER_IMAGE}#g" "${CSV_FILE}"
 	sed -i "s#registry.k8s.io/sig-storage/csi-node-driver-registrar.*#${NODE_DRIVER_REGISTRAR_IMAGE}#g" "${CSV_FILE}"
 	sed -i "s#registry.access.redhat.com/ubi9.*#${SPIFFE_CSI_INIT_CONTAINER_IMAGE}#g" "${CSV_FILE}"
 
@@ -105,8 +103,8 @@ fi
 # shellcheck source=/dev/null
 source "${IMAGES_DIGEST_CONF_FILE}"
 
-if [[ -z ${SPIRE_SERVER_IMAGE} ]] || [[ -z ${SPIRE_AGENT_IMAGE} ]] || [[ -z ${SPIFFE_CSI_DRIVER_IMAGE} ]] || [[ -z ${SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE} ]] || [[ -z ${SPIRE_CONTROLLER_MANAGER_IMAGE} ]] || [[ -z ${SPIFFE_HELPER_IMAGE} ]] || [[ -z ${NODE_DRIVER_REGISTRAR_IMAGE} ]] || [[ -z ${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE} ]] || [[ -z ${SPIFFE_CSI_INIT_CONTAINER_IMAGE} ]]; then
-	log_error "\"${SPIRE_SERVER_IMAGE}\" or \"${SPIRE_AGENT_IMAGE}\"  or \"${SPIFFE_CSI_DRIVER_IMAGE}\"  or \"${SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE}\"  or \"${SPIRE_CONTROLLER_MANAGER_IMAGE}\"  or \"${SPIFFE_HELPER_IMAGE}\" or \"${NODE_DRIVER_REGISTRAR_IMAGE}\" or \"${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE}\ or \"${SPIFFE_CSI_INIT_CONTAINER_IMAGE}\" is not set"
+if [[ -z ${SPIRE_SERVER_IMAGE} ]] || [[ -z ${SPIRE_AGENT_IMAGE} ]] || [[ -z ${SPIFFE_CSI_DRIVER_IMAGE} ]] || [[ -z ${SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE} ]] || [[ -z ${SPIRE_CONTROLLER_MANAGER_IMAGE} ]] || [[ -z ${NODE_DRIVER_REGISTRAR_IMAGE} ]] || [[ -z ${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE} ]] || [[ -z ${SPIFFE_CSI_INIT_CONTAINER_IMAGE} ]]; then
+	log_error "\"${SPIRE_SERVER_IMAGE}\" or \"${SPIRE_AGENT_IMAGE}\"  or \"${SPIFFE_CSI_DRIVER_IMAGE}\"  or \"${SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE}\"  or \"${SPIRE_CONTROLLER_MANAGER_IMAGE}\" or \"${NODE_DRIVER_REGISTRAR_IMAGE}\" or \"${ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE}\ or \"${SPIFFE_CSI_INIT_CONTAINER_IMAGE}\" is not set"
 	exit 1
 fi
 
