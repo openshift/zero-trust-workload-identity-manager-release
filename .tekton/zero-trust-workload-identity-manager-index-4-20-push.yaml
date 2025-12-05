@@ -9,6 +9,7 @@ metadata:
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
       == "main" && ( "catalogs/v4.20/***".pathChanged() || ".tekton/zero-trust-workload-identity-manager-index-4-20-push.yaml".pathChanged()
+      )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: zero-trust-workload-identity-manager-index-4-20
