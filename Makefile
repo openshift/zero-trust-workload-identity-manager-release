@@ -55,7 +55,7 @@ build-catalog-image:
 ## update catalog using the provided bundle image.
 .PHONY: update-catalog
 update-catalog: get-opm
-	# Ex: make update-catalog OPERATOR_BUNDLE_IMAGE=registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:956bf645a3a8eb1e32279a040b7adf0000117530a7a80d58fe13c61dce36134c CATALOG_DIR=catalogs/v4.18/catalog BUNDLE_FILE_NAME=bundle-v0.1.0.yaml REPLICATE_BUNDLE_FILE_IN_CATALOGS=no
+	# Ex: make update-catalog OPERATOR_BUNDLE_IMAGE=registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:aea3a576a99182d83bf6fd50359deab36970cbc6b0ed07be49107a597c29c475 CATALOG_DIR=catalogs/v4.20/catalog BUNDLE_FILE_NAME=bundle-v0.1.0.yaml REPLICATE_BUNDLE_FILE_IN_CATALOGS=no
 	./hack/update_catalog.sh $(OPM_TOOL_PATH) $(OPERATOR_BUNDLE_IMAGE) $(CATALOG_DIR) $(BUNDLE_FILE_NAME) $(REPLICATE_BUNDLE_FILE_IN_CATALOGS)
 
 ## update catalog and build catalog image.
