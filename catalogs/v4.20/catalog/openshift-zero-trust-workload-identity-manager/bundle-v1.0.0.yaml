@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:bd5a3582847e5034f47232fe139dc32a4d045b7238a165203d012fadca93d0e7
+image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:cfd21c981ea1fce408e309b346ce8005e8b0ee73fe5e2461eefaf7ea867f3831
 name: zero-trust-workload-identity-manager.v1.0.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -65,7 +65,7 @@ properties:
               "name": "cluster"
             },
             "spec": {
-              "agentSocketPath": "/run/spire/agent-sockets/spire-agent.sock",
+              "agentSocketPath": "/run/spire/agent-sockets",
               "pluginName": "csi.spiffe.io"
             }
           },
@@ -108,11 +108,11 @@ properties:
               "name": "cluster"
             },
             "spec": {
-              "agentSocketName": "spire-agent.sock",
+              "csiDriverName": "csi.spiffe.io",
               "jwtIssuer": "https://oidc-discovery.example.com",
               "logFormat": "text",
               "logLevel": "info",
-              "managedRoute": true,
+              "managedRoute": "true",
               "replicaCount": 1
             }
           },
@@ -258,8 +258,8 @@ properties:
         ]
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
-      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a9ebe1ccbd2395957aebe988ed2f63527220b7f2ef7ac7674aeac1ee0aeb047f
-      createdAt: 2025-12-08T05:32:34
+      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a2f83e5e9433361b279b9609d4492300fc8e9ed3c0ca737d5805f5b06a0e3777
+      createdAt: 2025-12-09T14:41:25
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -359,8 +359,8 @@ relatedImages:
   name: spire-oidc-discovery-provider
 - image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:6a14fb03c3b7256a405cff52ae0e5c7e66b1fa1a8e3a955d6670123f5534d4e4
   name: spire-server
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:bd5a3582847e5034f47232fe139dc32a4d045b7238a165203d012fadca93d0e7
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:cfd21c981ea1fce408e309b346ce8005e8b0ee73fe5e2461eefaf7ea867f3831
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a9ebe1ccbd2395957aebe988ed2f63527220b7f2ef7ac7674aeac1ee0aeb047f
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:a2f83e5e9433361b279b9609d4492300fc8e9ed3c0ca737d5805f5b06a0e3777
   name: ""
 schema: olm.bundle
