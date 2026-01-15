@@ -5,3 +5,11 @@ entries:
 name: tech-preview-v0.1
 package: openshift-zero-trust-workload-identity-manager
 schema: olm.channel
+
+---
+entries:
+- name: zero-trust-workload-identity-manager.v1.0.0
+  skipRange: '<1.0.0'
+name: stable-v1
+package: openshift-zero-trust-workload-identity-manager
+schema: olm.channel
