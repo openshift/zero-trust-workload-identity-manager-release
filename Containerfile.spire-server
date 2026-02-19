@@ -27,7 +27,7 @@ RUN go build -o bin/spire-server -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spi
     && rm -rf ${GOTMPDIR} ${GOCACHE} ${GOMODCACHE}
 
 # Final minimal image
-FROM registry.redhat.io/rhel9-4-els/rhel:9.4
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:c7d44146f826037f6873d99da479299b889473492d3c1ab8af86f08af04ec8a0
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
