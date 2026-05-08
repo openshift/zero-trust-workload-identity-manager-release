@@ -41,6 +41,7 @@ LABEL com.redhat.component="oidc-discovery-provider-container" \
       io.openshift.build.source-location="${SOURCE_URL}" \
       io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
       io.k8s.display-name="OIDC Discovery Provider" \
-      io.k8s.description="Container for OIDC Discovery Provider to expose SPIFFE identities via standard OIDC interfaces"
+      io.k8s.description="Container for OIDC Discovery Provider to expose SPIFFE identities via standard OIDC interfaces" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:1.0::el9"
 
 ENTRYPOINT ["/oidc-discovery-provider"]
