@@ -43,6 +43,7 @@ LABEL name="zero-trust-workload-identity-manager/spiffe-spire-controller-manager
       io.openshift.expose-services="" \
       io.openshift.build.commit.id="${COMMIT_SHA}" \
       io.openshift.build.source-location="${SOURCE_URL}" \
-      io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}"
+      io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:1.0::el9"
 
 ENTRYPOINT ["/spire-controller-manager"]
