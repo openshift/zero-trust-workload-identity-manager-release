@@ -24,7 +24,7 @@ ARG SOURCE_URL
 
 # Core bundle labels.
 LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-container" \
-      name="zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-bundle" \
+      name="zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle" \
       summary="zero trust identity manager" \
       description="zero trust identity manager" \
       distribution-scope="public" \
@@ -41,7 +41,7 @@ LABEL com.redhat.component="zero-trust-workload-identity-manager-bundle-containe
       io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
       io.openshift.maintainer.product="OpenShift Container Platform" \
       io.openshift.tags="openshift,security,zero-trust-workload-identity-manager" \
-      io.k8s.display-name="openshift-zero-trust-workload-identity-manager-bundle" \
+      io.k8s.display-name="openshift-zero-trust-workload-identity-manager-operator-bundle" \
       io.k8s.description="zero-trust-workload-identity-manager-bundle-container" \
       operators.operatorframework.io.bundle.mediatype.v1="registry+v1" \
       operators.operatorframework.io.bundle.manifests.v1=manifests/ \
