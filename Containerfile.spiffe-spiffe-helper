@@ -17,7 +17,7 @@ ENV GOFLAGS=""
 RUN go build -o bin/spiffe-helper -ldflags "-w -s" -tags ${GO_BUILD_TAGS} cmd/spiffe-helper/main.go
 
 # Final runtime image: minimal RHEL 9 image
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:b9b10f42d7eba7ad4a6d5ef26b7d34fdc892b2ffe59b8d0372ec884008569eb6
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:ae09ecc3d754bc1726cbda3e2599cc7839e09fe1cc547ce173cf669b645be3cc
 
 # Konflux build metadata
 ARG RELEASE_VERSION
