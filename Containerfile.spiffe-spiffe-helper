@@ -1,0 +1,49 @@
+# Builder image using Red Hat's FIPS-compliant Golang toolchain
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.25 AS builder
+
+ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-helper"
+
+WORKDIR ${SOURCE_DIR}
+COPY spiffe-spiffe-helper .
+COPY spiffe-spiffe-helper/LICENSE /licenses/.
+
+ENV CGO_ENABLED=1
+ENV GO_BUILD_TAGS=strictfipsruntime,openssl
+ENV GOEXPERIMENT=strictfipsruntime
+ENV GOFLAGS=""
+
+
+# Build the binary
+RUN go build -o bin/spiffe-helper -ldflags "-w -s" -tags ${GO_BUILD_TAGS} cmd/spiffe-helper/main.go
+
+# Final runtime image: minimal RHEL 9 image
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:ae09ecc3d754bc1726cbda3e2599cc7839e09fe1cc547ce173cf669b645be3cc
+
+# Konflux build metadata
+ARG RELEASE_VERSION
+ARG COMMIT_SHA
+ARG SOURCE_URL
+ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-helper"
+
+COPY --from=builder ${SOURCE_DIR}/bin/spiffe-helper /spiffe-helper
+COPY --from=builder /licenses /licenses
+
+USER 65534:65534
+
+LABEL name="zero-trust-workload-identity-manager/spiffe-helper-rhel9" \
+      version="${RELEASE_VERSION}" \
+      release="${RELEASE_VERSION}" \
+      summary="SPIFFE Helper utility for SPIRE integration" \
+      description="Helper binary to support SPIFFE/SPIRE workload identity integrations in OpenShift." \
+      maintainer="Red Hat, Inc." \
+      vendor="Red Hat, Inc." \
+      com.redhat.component="spiffe-helper-container" \
+      io.k8s.display-name="SPIFFE Helper" \
+      io.k8s.description="Helper binary for workload identity setup using SPIFFE/SPIRE." \
+      io.openshift.tags="spiffe,spire,helper,security,identity" \
+      io.openshift.build.commit.id="${COMMIT_SHA}" \
+      io.openshift.build.source-location="${SOURCE_URL}" \
+      io.openshift.build.commit.url="${SOURCE_URL}/commit/${COMMIT_SHA}" \
+      cpe="cpe:/a:redhat:zero_trust_workload_identity_manager:1.1::el9"
+
+ENTRYPOINT ["/spiffe-helper"]
