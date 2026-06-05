@@ -1,29 +1,91 @@
+## local variables.
+
+zero_trust_workload_identity_manager_submodule_dir = zero-trust-workload-identity-manager
+zero_trust_workload_identity_manager_containerfile_name = Containerfile.zero-trust-workload-identity-manager
+zero_trust_workload_identity_manager_bundle_containerfile_name = Containerfile.zero-trust-workload-identity-manager.bundle
+
+spiffe_spire_submodule_dir = spiffe-spire
+
+spiffe_spire_controller_manager_submodule_dir = spiffe-spire-controller-manager
+spiffe_spire_controller_manager_containerfile_name = Containerfile.spiffe-spire-controller-manager
+
+
+spiffe_spire_server_containerfile_name = Containerfile.spire-server
+spiffe_spire_agent_containerfile_name = Containerfile.spire-agent
+spiffe_spire_oidc_discovery_provider_containerfile_name = Containerfile.spire-oidc-discovery-provider
+
+
+spiffe_spiffe_csi_submodule_dir = spiffe-spiffe-csi
+spiffe_spiffe_csi_containerfile_name = Containerfile.spiffe-spiffe-csi
+
+spiffe_spiffe_helper_submodule_dir = spiffe-spiffe-helper
+spiffe_spiffe_helper_containerfile_name = Containerfile.spiffe-spiffe-helper
+
+
+commit_sha = $(strip $(shell git rev-parse HEAD))
+source_url = $(strip $(shell git remote get-url origin))
+release_version = v$(strip $(shell git branch --show-current | cut -d'-' -f2))
+
+## current local branch name which will be used for updating submodules.
+LOCAL_BRANCH_NAME ?= $(strip $(shell git branch --show-current))
+
+## current branch name of the spiffe-spire submodule.
+SPIFFE_SPIRE_BRANCH ?= $(LOCAL_BRANCH_NAME)
+
+## current branch name of the spiffe-spire-controller-manager submodule.
+SPIFFE_SPIRE_CONTROLLER_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
+
+## current branch name of the spiffe-spiffe-csi submodule.
+SPIFFE_SPIFFE_CSI_BRANCH ?= $(LOCAL_BRANCH_NAME)
+
+## current branch name of the spiffe-spiffe-helper submodule.
+SPIFFE_SPIFFE_HELPER_BRANCH ?= $(LOCAL_BRANCH_NAME)
+
+## current branch name of the zero-trust-workload-identity-manager submodule
+ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH ?= $(LOCAL_BRANCH_NAME)
+
 ## container build tool to use for creating images.
 CONTAINER_ENGINE ?= docker
 
-## image name for zero-trust-workload-identity-manager catalog.
-CATALOG_IMAGE ?= zero-trust-workload-identity-manager-catalog
+## image name for zero-trust-workload-identity-manager.
+ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE ?= zero-trust-workload-identity-manager
+
+## image name for zero-trust-workload-identity-manager-bundle.
+ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE ?= zero-trust-workload-identity-manager-bundle
+
+## image name for spiffe-spire.
+SPIFFE_SPIRE_IMAGE ?= spiffe-spire
+
+## image name for spiffe-spire-controller-manager.
+SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE ?= spiffe-spire-controller-manager
+
+
+SPIFFE_SPIRE_SERVER_IMAGE ?= spire-server
+
+SPIFFE_SPIRE_AGENT_IMAGE ?= spire-agent
+
+SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE ?= spire-oidc-discovery-provider
+
+## image name for spiffe-spiffe-csi.
+SPIFFE_SPIFFE_CSI_IMAGE ?= spiffe-spiffe-csi
+
+## image name for spiffe-spiffe-helper
+SPIFFE_SPIFFE_HELPER_IMAGE ?= spiffe-spiffe-helper
+
 
 ## image version to tag the created images with.
-IMAGE_VERSION ?= latest
+IMAGE_VERSION ?= 1.1.0
 
-## path to store the tools binary.
-TOOL_BIN_DIR = $(strip $(shell git rev-parse --show-toplevel --show-superproject-working-tree | tail -1))/bin/tools
+SPIFFE_SPIRE_IMAGE_VERSION ?= v1.14.7
+SPIFFE_CSI_IMAGE_VERSION ?= v0.2.8
+SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION ?= v0.6.4
+SPIFFE_SPIFFE_HELPER_IMAGE_VERSION ?= v0.11.0
 
-## Operator Package Manager tool to download.
-OPM_TOOL_VERSION ?= v1.48.0
+## args to pass during image build
+IMAGE_BUILD_ARGS ?= --build-arg RELEASE_VERSION=$(release_version) --build-arg COMMIT_SHA=$(commit_sha) --build-arg SOURCE_URL=$(source_url)
 
-## URL to download Operator Package Manager tool.
-OPM_DOWNLOAD_URL = https://github.com/operator-framework/operator-registry/releases/download/$(OPM_TOOL_VERSION)/$(shell go env GOOS)-$(shell go env GOARCH)-opm
-
-## Operator Package Manager tool path.
-OPM_TOOL_PATH ?= $(TOOL_BIN_DIR)/opm
-
-## Operator bundle image to use for generating catalog.
-OPERATOR_BUNDLE_IMAGE ?=
-
-## Catalog directory where generated catalog will be stored. Directory must have sub-directory with package `openshift-zero-trust-workload-identity-manager` name.
-CATALOG_DIR ?= "catalog/"
+## tailored command to build images.
+IMAGE_BUILD_CMD = $(CONTAINER_ENGINE) build $(IMAGE_BUILD_ARGS)
 
 .DEFAULT_GOAL := help
 ## usage summary.
@@ -47,25 +109,71 @@ help:
 .PHONY: all
 all: verify
 
-## build operator catalog image.
-.PHONY: build-catalog-image
-build-catalog-image:
-	$(CONTAINER_ENGINE) build -f Containerfile.catalog -t $(CATALOG_IMAGE):$(IMAGE_VERSION) .
+## checkout submodules branch to match the parent branch.
+.PHONY: switch-submodules-branch
+switch-submodules-branch:
+	cd $(spiffe_spire_submodule_dir); git checkout $(SPIFFE_SPIRE_BRANCH); cd - > /dev/null
+	cd $(spiffe_spire_controller_manager_submodule_dir); git checkout $(SPIFFE_SPIRE_CONTROLLER_MANAGER_BRANCH); cd - > /dev/null
+	cd $(spiffe_spiffe_csi_submodule_dir); git checkout $(SPIFFE_SPIFFE_CSI_BRANCH); cd - > /dev/null
+	cd $(spiffe_spiffe_helper_submodule_dir); git checkout $(SPIFFE_SPIFFE_HELPER_BRANCH); cd - > /dev/null
+	cd $(zero_trust_workload_identity_manager_submodule_dir); git checkout $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BRANCH); cd - > /dev/null
+	# update with local cache.
+	git submodule update
 
-## update catalog using the provided bundle image.
-.PHONY: update-catalog
-update-catalog: get-opm
-	# Ex: make update-catalog OPERATOR_BUNDLE_IMAGE=registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:aea3a576a99182d83bf6fd50359deab36970cbc6b0ed07be49107a597c29c475 CATALOG_DIR=catalogs/v4.20/catalog BUNDLE_FILE_NAME=bundle-v0.1.0.yaml REPLICATE_BUNDLE_FILE_IN_CATALOGS=no
-	./hack/update_catalog.sh $(OPM_TOOL_PATH) $(OPERATOR_BUNDLE_IMAGE) $(CATALOG_DIR) $(BUNDLE_FILE_NAME) $(REPLICATE_BUNDLE_FILE_IN_CATALOGS)
+## update submodules revision to match the revision of the origin repository.
+.PHONY: update-submodules
+update-submodules:
+	git submodule update --remote $(spiffe_spire_submodule_dir)
+	git submodule update --remote $(spiffe_spire_controller_manager_submodule_dir)
+	git submodule update --remote $(spiffe_spiffe_csi_submodule_dir)
+	git submodule update --remote $(spiffe_spiffe_helper_submodule_dir)
+	git submodule update --remote $(zero_trust_workload_identity_manager_submodule_dir)
 
-## update catalog and build catalog image.
-.PHONY: catalog
-catalog: get-opm build-catalog-image
+## build all the images - operator, operand and operator-bundle.
+.PHONY: build-images
+build-images: build-operand-images build-operator-image build-bundle-image
 
-# Only run update-catalog if OPERATOR_BUNDLE_IMAGE is set
-ifneq ($(OPERATOR_BUNDLE_IMAGE),)
-    catalog: get-opm update-catalog build-catalog-image
-endif
+## build operator image.
+.PHONY: build-operator-image
+build-operator-image:
+	$(IMAGE_BUILD_CMD) -f $(zero_trust_workload_identity_manager_containerfile_name) -t $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE):$(IMAGE_VERSION) .
+
+## build spiffe-csi image.
+.PHONY: build-spiffe-csi-image
+build-spiffe-csi-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_csi_containerfile_name) -t $(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) .
+
+## build spiffe-helper image.
+.PHONY: build-spiffe-helper-image
+build-spiffe-helper-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spiffe_helper_containerfile_name) -t $(SPIFFE_SPIFFE_HELPER_IMAGE):$(SPIFFE_SPIFFE_HELPER_IMAGE_VERSION) .
+
+## build all operand images
+.PHONY: build-operand-images
+build-operand-images: build-spiffe-csi-image build-spiffe-helper-image build-spire-agent-image build-spire-controller-manager-image build-spire-server-image build-spire-oidc-discovery-provider-image
+
+## build operator bundle image.
+.PHONY: build-bundle-image
+build-bundle-image:
+	$(IMAGE_BUILD_CMD) -f $(zero_trust_workload_identity_manager_bundle_containerfile_name) -t $(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION) .
+
+## build operand spire-controller-manager image.
+.PHONY: build-spire-controller-manager-image
+build-spire-controller-manager-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_controller_manager_containerfile_name) -t $(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION) .
+
+## build operand spire-server image.
+.PHONY: build-spire-server-image
+build-spire-server-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_server_containerfile_name) -t $(SPIFFE_SPIRE_SERVER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
+
+.PHONY: build-spire-agent-image
+build-spire-agent-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_agent_containerfile_name) -t $(SPIFFE_SPIRE_AGENT_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
+
+.PHONY: build-spire-oidc-discovery-provider-image
+build-spire-oidc-discovery-provider-image:
+	$(IMAGE_BUILD_CMD) -f $(spiffe_spire_oidc_discovery_provider_containerfile_name) -t $(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) .
 
 ## check shell scripts.
 .PHONY: verify-shell-scripts
@@ -79,29 +187,21 @@ verify-containerfiles:
 
 ## verify the changes are working as expected.
 .PHONY: verify
-verify: verify-shell-scripts verify-containerfiles validate-renovate-config
+verify: verify-shell-scripts verify-containerfiles
 
-## get opm(operator package manager) tool.
-.PHONY: get-opm
-get-opm:
-	$(call get-bin,$(OPM_TOOL_PATH),$(TOOL_BIN_DIR),$(OPM_DOWNLOAD_URL))
-
-define get-bin
-@[ -f "$(1)" ] || { \
-	[ ! -d "$(2)" ] && mkdir -p "$(2)" || true ;\
-	echo "Downloading $(3)" ;\
-	curl -fL $(3) -o "$(1)" ;\
-	chmod +x "$(1)" ;\
-}
-endef
+## update all required contents.
+.PHONY: update
+update: update-submodules
 
 ## clean up temp dirs, images.
 .PHONY: clean
 clean:
-	$(CONTAINER_ENGINE) rmi -i $(CATALOG_IMAGE):$(IMAGE_VERSION)
-	rm -r $(TOOL_BIN_DIR)
-
-## validate renovate config.
-.PHONY: validate-renovate-config
-validate-renovate-config:
-	./hack/renovate-config-validator.sh
+	$(CONTAINER_ENGINE) rmi \
+		$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_IMAGE):$(IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_SERVER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_AGENT_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_OIDC_DISCOVERY_PROVIDER_IMAGE):$(SPIFFE_SPIRE_IMAGE_VERSION) \
+		$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE):$(SPIFFE_SPIRE_CONTROLLER_MANAGER_IMAGE_VERSION) \
+		$(SPIFFE_SPIFFE_CSI_IMAGE):$(SPIFFE_CSI_IMAGE_VERSION) \
+		$(SPIFFE_SPIFFE_HELPER_IMAGE):$(SPIFFE_SPIFFE_HELPER_IMAGE_VERSION) \
+		$(ZERO_TRUST_WORKLOAD_IDENTITY_MANAGER_BUNDLE_IMAGE):$(IMAGE_VERSION)

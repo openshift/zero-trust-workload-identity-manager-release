@@ -1,8 +1,2 @@
 .idea
 bin/
-
-spiffe-spiffe-csi/
-spiffe-spiffe-helper/
-spiffe-spire/
-spiffe-spire-controller-manager/
-zero-trust-workload-identity-manager/
