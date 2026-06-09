@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:b966d0bc88037bba90443d05138a462cdd106edcb9da162355220e8ed8f2b892
+image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:3d173a6c247f406bbd02c374985bf1969ddeeb7304ea567ae025a01ce20fb0d0
 name: zero-trust-workload-identity-manager.v1.1.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -258,8 +258,8 @@ properties:
         ]
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
-      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:c0d3483dd5b0a413c486dabfa86dd25dd199b7a0877b072be5756f9f95e6c711
-      createdAt: 2026-06-05T15:12:12
+      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:305bb1c21caedddfdd053327801450c3391e6c81762934702e18ec8028f273de
+      createdAt: 2026-06-09T08:16:27
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -271,7 +271,8 @@ properties:
       features.operators.openshift.io/token-auth-azure: "false"
       features.operators.openshift.io/token-auth-gcp: "false"
       operatorframework.io/suggested-namespace: zero-trust-workload-identity-manager
-      operators.openshift.io/valid-subscription: '["OpenShift Platform Plus"]'
+      operators.openshift.io/valid-subscription: '["OpenShift Container Platform",
+        "OpenShift Platform Plus"]'
       operators.operatorframework.io/builder: operator-sdk-v1.39.0
       operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
       repository: https://github.com/openshift/zero-trust-workload-identity-manager
@@ -358,8 +359,8 @@ relatedImages:
   name: spire-oidc-discovery-provider
 - image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:7d71c6931bd5502714d3f965487efb28c22ff53cf4ba6027c90b495cb40f75c8
   name: spire-server
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:b966d0bc88037bba90443d05138a462cdd106edcb9da162355220e8ed8f2b892
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:3d173a6c247f406bbd02c374985bf1969ddeeb7304ea567ae025a01ce20fb0d0
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:c0d3483dd5b0a413c486dabfa86dd25dd199b7a0877b072be5756f9f95e6c711
+- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:305bb1c21caedddfdd053327801450c3391e6c81762934702e18ec8028f273de
   name: ""
 schema: olm.bundle
