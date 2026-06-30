@@ -16,7 +16,7 @@ COPY tools.go go.mod go.sum /
 RUN go build -o /usr/bin/yq github.com/mikefarah/yq/v4 && chmod +x /usr/bin/yq
 RUN ./render_templates.sh /manifests /metadata /images_digest.conf
 
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:ae09ecc3d754bc1726cbda3e2599cc7839e09fe1cc547ce173cf669b645be3cc
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:463cae32c6f6f5594b11a5c22de275016bd8545ce58a6373388e8b24f13fc15c
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
