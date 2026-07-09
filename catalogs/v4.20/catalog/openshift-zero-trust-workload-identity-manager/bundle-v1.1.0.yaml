@@ -1,5 +1,5 @@
 ---
-image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:2fe3940ebd233d706d23b265263e634e2a96580088dab6e4afffa1bf270eb787
+image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:f476a03f1a26bf5d06f92496109a2561c1d4716c328aca1c2d7f3f330c4ec910
 name: zero-trust-workload-identity-manager.v1.1.0
 package: openshift-zero-trust-workload-identity-manager
 properties:
@@ -258,8 +258,8 @@ properties:
         ]
       capabilities: Basic Install
       console.openshift.io/disable-operand-delete: "true"
-      containerImage: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:ca4fe806712a0a5761544b8044d02b189eebe56c3a532a1d8423a53a39ed5c78
-      createdAt: 2026-06-17T09:09:26
+      containerImage: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:ca4fe806712a0a5761544b8044d02b189eebe56c3a532a1d8423a53a39ed5c78
+      createdAt: 2026-06-24T06:37:06
       features.operators.openshift.io/cnf: "false"
       features.operators.openshift.io/cni: "false"
       features.operators.openshift.io/csi: "true"
@@ -349,18 +349,18 @@ relatedImages:
   name: spiffe-csi-init-container
 - image: registry.redhat.io/openshift4/ose-csi-node-driver-registrar-rhel9@sha256:cdef553ad9d575832bb90464dc0297b0c681a929a0da537ca2393e070ccd3232
   name: node-driver-registrar
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-csi-driver-rhel9@sha256:d69ea9f935be90c3e8e1fe5b0d75bfbefa1ffd9ceb729cc73e9a2b17eaa21703
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-csi-driver-rhel9@sha256:bd7cdc6d529f4b4861ebc97cb3d90edff02a1ac2c140f13e76f43c8f3f701828
   name: spiffe-csi-driver
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-agent-rhel9@sha256:356f7502bb5d5c6e98a3317152c5daba09ae2a8d3e3bde7bc7e319ead367a6c8
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-agent-rhel9@sha256:0aef06a46a4c03c6a040888a4e37b295fdbaf6fb5be8f9659d372255e379967d
   name: spire-agent
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-controller-manager-rhel9@sha256:b74141ffbdcac98fa12b1cd4ae0b3309d9bd06814e3d9d38c7afab0019bbb7ea
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-controller-manager-rhel9@sha256:f4419b03084312a7b3c6e82ae0d260e570bf128041964fee7e109fa16222ab1d
   name: spire-controller-manager
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-oidc-discovery-provider-rhel9@sha256:3655f46744e650aceefe9566aca21197cc40a6f6d974e6b6574a395ee01457c7
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-oidc-discovery-provider-rhel9@sha256:3e2ab122b73886dbd007412d4ebfda860713d0a52171664cc34f56a4dc30194a
   name: spire-oidc-discovery-provider
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:7d71c6931bd5502714d3f965487efb28c22ff53cf4ba6027c90b495cb40f75c8
+- image: registry.redhat.io/zero-trust-workload-identity-manager/spiffe-spire-server-rhel9@sha256:dad8fc67061ccbf88920d16c3ff909ae5a8e44c7c935a76d6e38e4e7c6937aed
   name: spire-server
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:2fe3940ebd233d706d23b265263e634e2a96580088dab6e4afffa1bf270eb787
+- image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-operator-bundle@sha256:f476a03f1a26bf5d06f92496109a2561c1d4716c328aca1c2d7f3f330c4ec910
   name: ""
-- image: registry.stage.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:ca4fe806712a0a5761544b8044d02b189eebe56c3a532a1d8423a53a39ed5c78
+- image: registry.redhat.io/zero-trust-workload-identity-manager/zero-trust-workload-identity-manager-rhel9@sha256:ca4fe806712a0a5761544b8044d02b189eebe56c3a532a1d8423a53a39ed5c78
   name: ""
 schema: olm.bundle
