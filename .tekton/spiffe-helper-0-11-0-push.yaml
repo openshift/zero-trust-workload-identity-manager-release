@@ -31,7 +31,6 @@ spec:
     value: .
   - name: build-args
     value:
-      # Touch this on-push PipelineRun to trigger release-1.1 rebuild (cosmetic).
       - RELEASE_VERSION=v0.11.0
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
