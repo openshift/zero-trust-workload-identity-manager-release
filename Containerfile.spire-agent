@@ -14,6 +14,7 @@ ENV GOEXPERIMENT=strictfipsruntime
 
 RUN go build -o bin/spire-agent -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spire-agent/main.go
 
+#using latest UBI image from registry.redhat.io
 FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:8eb2830d0936237fc13a1f2f7e45aecf90d69043380ad167fad0343632937f41
 
 ARG RELEASE_VERSION
