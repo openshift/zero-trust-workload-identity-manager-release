@@ -74,7 +74,7 @@ SPIFFE_SPIFFE_HELPER_IMAGE ?= spiffe-spiffe-helper
 
 
 ## image version to tag the created images with.
-IMAGE_VERSION ?= 1.1.0
+IMAGE_VERSION ?= 1.1.1
 
 SPIFFE_SPIRE_IMAGE_VERSION ?= v1.14.7
 SPIFFE_CSI_IMAGE_VERSION ?= v0.2.8
