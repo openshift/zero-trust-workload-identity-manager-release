@@ -4,18 +4,19 @@ metadata:
   annotations:
     build.appstudio.openshift.io/repo: https://github.com/openshift/zero-trust-workload-identity-manager-release?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
+    build.appstudio.redhat.com/pull_request_number: '{{pull_request_number}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
-    pipelinesascode.tekton.dev/cancel-in-progress: "false"
+    pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "release-1.0.0"  && (".tekton/spiffe-spire-agent-1-13-3-push.yaml".pathChanged()
-      || "Containerfile.spire-agent".pathChanged() || "spiffe-spire".pathChanged())
+    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
+      == "release-1.0.0" && (".tekton/spiffe-spire-server-1-13-6-pull-request.yaml".pathChanged()
+      || "Containerfile.spire-server".pathChanged() || "spiffe-spire".pathChanged())
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: spiffe-spire-agent-1-13-3
-    appstudio.openshift.io/component: spiffe-spire-agent-1-13-3
+    appstudio.openshift.io/application: spiffe-spire-server-1-13-6
+    appstudio.openshift.io/component: spiffe-spire-server-1-13-6
     pipelines.appstudio.openshift.io/type: build
-  name: spiffe-spire-agent-1-13-3-on-push
+  name: spiffe-spire-server-1-13-6-on-pull-request
   namespace: zero-trust-workload-tenant
 spec:
   params:
@@ -24,14 +25,16 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-spire-agent-1-13-3/spiffe-spire-agent-1-13-3:{{revision}}
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-spire-server-1-13-6/spiffe-spire-server-1-13-6:on-pr-{{revision}}
+  - name: image-expires-after
+    value: 5d
   - name: dockerfile
-    value: Containerfile.spire-agent
+    value: Containerfile.spire-server
   - name: path-context
     value: .
   - name: build-args
     value:
-      - RELEASE_VERSION=v1.13.3
+      - RELEASE_VERSION=v1.13.6
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
   - name: prefetch-input
@@ -39,7 +42,7 @@ spec:
   pipelineRef:
     name: multi-arch-build-pipeline
   taskRunTemplate:
-    serviceAccountName: build-pipeline-spiffe-spire-agent-1-13-3
+    serviceAccountName: build-pipeline-spiffe-spire-server-1-13-6
   workspaces:
   - name: git-auth
     secret:
