@@ -17,4 +17,4 @@
 [submodule "spiffe-spiffe-helper"]
 	path = spiffe-spiffe-helper
 	url = https://github.com/openshift/spiffe-spiffe-helper.git
-	branch = release-0.10.0
+	branch = v0.10.0
