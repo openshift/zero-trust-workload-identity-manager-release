@@ -1,7 +1,7 @@
 [submodule "spiffe-spire"]
 	path = spiffe-spire
 	url = https://github.com/openshift/spiffe-spire.git
-	branch = release/v1.13.3
+	branch = release/v1.13.6
 [submodule "spiffe-spire-controller-manager"]
 	path = spiffe-spire-controller-manager
 	url = https://github.com/openshift/spiffe-spire-controller-manager.git
@@ -17,4 +17,4 @@
 [submodule "spiffe-spiffe-helper"]
 	path = spiffe-spiffe-helper
 	url = https://github.com/openshift/spiffe-spiffe-helper.git
-	branch = release-0.10.0
+	branch = v0.10.0
