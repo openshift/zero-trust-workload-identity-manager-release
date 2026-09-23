@@ -8,7 +8,7 @@ COPY zero-trust-workload-identity-manager/LICENSE /licenses/
 
 RUN make build --warn-undefined-variables
 
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:8eb2830d0936237fc13a1f2f7e45aecf90d69043380ad167fad0343632937f41
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:8ebe2ad8fdf3cab3e5a53c1edc69194c98209cfadab24b884f4ad9ebcf7bbbfc
 
 # Values for below ARGs will passed from tekton configs for konflux builds.
 ## Release version of the zero-trust-workload-identity-manager source code used in the build.
