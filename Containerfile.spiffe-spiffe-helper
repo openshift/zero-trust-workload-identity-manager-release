@@ -18,7 +18,7 @@ RUN go build -o bin/spiffe-helper -ldflags "-w -s" -tags ${GO_BUILD_TAGS} cmd/sp
 
 # Final runtime image: minimal RHEL 9 image
 # using latest UBI 9.7 image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:907b68736aa798b2d38255b7aa070b2a70acb90803864a40f05d0ec47556ddd0
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:1d7c5517a4a1a8e2688620b39ee980e82505ca1ab7ae5541b5463120ae9b3897
 
 # Konflux build metadata
 ARG RELEASE_VERSION
