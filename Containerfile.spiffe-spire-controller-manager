@@ -17,7 +17,7 @@ RUN go build -o bin/spire-controller-manager -ldflags "-w -s" -tags ${GO_BUILD_T
 
 # Final runtime image: minimal RHEL 9 image
 #using latest UBI image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:8ebe2ad8fdf3cab3e5a53c1edc69194c98209cfadab24b884f4ad9ebcf7bbbfc
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:1d7c5517a4a1a8e2688620b39ee980e82505ca1ab7ae5541b5463120ae9b3897
 
 # Konflux build metadata
 ARG RELEASE_VERSION
