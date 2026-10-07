@@ -17,7 +17,7 @@ RUN go build -o bin/oidc-discovery-provider -ldflags '-w -s' -tags ${GO_BUILD_TA
 
 # Stage 2: Minimal runtime image
 # using latest UBI 9.7 image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:907b68736aa798b2d38255b7aa070b2a70acb90803864a40f05d0ec47556ddd0
+FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:5ed244b62bbf4095080144d9d35eb8fcd3d39a9801f94aadd63b9d10978a01ae
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
