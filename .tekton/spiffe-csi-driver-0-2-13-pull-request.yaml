@@ -9,14 +9,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "true"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "release-1.1" && (".tekton/spiffe-spire-controller-manager-0-6-4-pull-request.yaml".pathChanged()
-      || "Containerfile.spiffe-spire-controller-manager".pathChanged() || "spiffe-spire-controller-manager".pathChanged())
+      == "release-1.1" && (".tekton/spiffe-csi-driver-0-2-13-pull-request.yaml".pathChanged()
+      || "Containerfile.spiffe-spiffe-csi".pathChanged() || "spiffe-spiffe-csi".pathChanged())
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: spiffe-spire-controller-manager-0-6-4
-    appstudio.openshift.io/component: spiffe-spire-controller-manager-0-6-4
+    appstudio.openshift.io/application: spiffe-csi-driver-0-2-13
+    appstudio.openshift.io/component: spiffe-csi-driver-0-2-13
     pipelines.appstudio.openshift.io/type: build
-  name: spiffe-spire-controller-manager-0-6-4-on-pull-request
+  name: spiffe-csi-driver-0-2-13-on-pull-request
   namespace: zero-trust-workload-tenant
 spec:
   params:
@@ -25,24 +25,24 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-spire-controller-manager-0-6-4/spiffe-spire-controller-manager-0-6-4:on-pr-{{revision}}
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-csi-driver-0-2-13/spiffe-csi-driver-0-2-13:on-pr-{{revision}}
   - name: image-expires-after
     value: 5d
   - name: dockerfile
-    value: Containerfile.spiffe-spire-controller-manager
+    value: Containerfile.spiffe-spiffe-csi
   - name: path-context
     value: .
   - name: build-args
     value:
-      - RELEASE_VERSION=v0.6.4
+      - RELEASE_VERSION=v0.2.13
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
   - name: prefetch-input
-    value: '{"type": "gomod", "path": "spiffe-spire-controller-manager"}'
+    value: '{"type": "gomod", "path": "spiffe-spiffe-csi"}'
   pipelineRef:
     name: multi-arch-build-pipeline
   taskRunTemplate:
-    serviceAccountName: build-pipeline-spiffe-spire-controller-manager-0-6-4
+    serviceAccountName: build-pipeline-spiffe-csi-driver-0-2-13
   workspaces:
   - name: git-auth
     secret:

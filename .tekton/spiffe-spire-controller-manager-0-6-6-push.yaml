@@ -8,14 +8,14 @@ metadata:
     pipelinesascode.tekton.dev/cancel-in-progress: "false"
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "release-1.1" && (".tekton/spiffe-csi-driver-0-2-8-push.yaml".pathChanged()
-      || "Containerfile.spiffe-spiffe-csi".pathChanged() || "spiffe-spiffe-csi".pathChanged())
+      == "release-1.1" && (".tekton/spiffe-spire-controller-manager-0-6-6-push.yaml".pathChanged()
+      || "Containerfile.spiffe-spire-controller-manager".pathChanged() || "spiffe-spire-controller-manager".pathChanged())
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: spiffe-csi-driver-0-2-8
-    appstudio.openshift.io/component: spiffe-csi-driver-0-2-8
+    appstudio.openshift.io/application: spiffe-spire-controller-manager-0-6-6
+    appstudio.openshift.io/component: spiffe-spire-controller-manager-0-6-6
     pipelines.appstudio.openshift.io/type: build
-  name: spiffe-csi-driver-0-2-8-on-push
+  name: spiffe-spire-controller-manager-0-6-6-on-push
   namespace: zero-trust-workload-tenant
 spec:
   params:
@@ -24,22 +24,22 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-csi-driver-0-2-8/spiffe-csi-driver-0-2-8:{{revision}}
+    value: quay.io/redhat-user-workloads/zero-trust-workload-tenant/spiffe-spire-controller-manager-0-6-6/spiffe-spire-controller-manager-0-6-6:{{revision}}
   - name: dockerfile
-    value: Containerfile.spiffe-spiffe-csi
+    value: Containerfile.spiffe-spire-controller-manager
   - name: path-context
     value: .
   - name: build-args
     value:
-      - RELEASE_VERSION=v0.2.8
+      - RELEASE_VERSION=v0.6.6
       - COMMIT_SHA={{revision}}
       - SOURCE_URL={{source_url}}
   - name: prefetch-input
-    value: '{"type": "gomod", "path": "spiffe-spiffe-csi"}'
+    value: '{"type": "gomod", "path": "spiffe-spire-controller-manager"}'
   pipelineRef:
     name: multi-arch-build-pipeline
   taskRunTemplate:
-    serviceAccountName: build-pipeline-spiffe-csi-driver-0-2-8
+    serviceAccountName: build-pipeline-spiffe-spire-controller-manager-0-6-6
   workspaces:
   - name: git-auth
     secret:
