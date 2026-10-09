@@ -1,0 +1,7 @@
+---
+entries:
+- name: zero-trust-workload-identity-manager.v1.1.2
+  skipRange: '<1.1.2'
+name: stable-v1
+package: openshift-zero-trust-workload-identity-manager
+schema: olm.channel
