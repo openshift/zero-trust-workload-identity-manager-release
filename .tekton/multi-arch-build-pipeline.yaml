@@ -59,6 +59,10 @@ spec:
       description: Enable cache proxy configuration
       name: enable-cache-proxy
       type: string
+    - default: "true"
+      description: Use the package registry proxy when prefetching dependencies
+      name: enable-package-registry-proxy
+      type: string
     - default:
         - $(params.build-args)
       description: Array of --build-arg values ("arg=value" strings) for buildah
@@ -141,6 +145,8 @@ spec:
           value: $(params.output-image).prefetch
         - name: ociArtifactExpiresAfter
           value: $(params.image-expires-after)
+        - name: enable-package-registry-proxy
+          value: $(params.enable-package-registry-proxy)
       runAfter:
         - clone-repository
       taskRef:
@@ -148,7 +154,7 @@ spec:
           - name: name
             value: prefetch-dependencies-oci-ta
           - name: bundle
-            value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies-oci-ta:0.11.0@sha256:e670e563939f8c5582b64b1f693ae104a3f4cba4dfd651ecbd15f341307c86b9
+            value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies-oci-ta:0.10.3@sha256:0c386f2c26b46b978280c5c54caac26bcd524975f8f7cc06bb080ba00eae3ad4
           - name: kind
             value: task
         resolver: bundles
@@ -196,7 +202,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
         - name: IMAGE_APPEND_PLATFORM
           value: "true"
       runAfter:
@@ -241,7 +247,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       runAfter:
         - build-image-index
       taskRef:
@@ -341,7 +347,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       runAfter:
         - build-image-index
       taskRef:
@@ -413,7 +419,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       runAfter:
         - coverity-availability-check
       taskRef:
@@ -460,7 +466,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       runAfter:
         - build-image-index
       taskRef:
@@ -486,7 +492,7 @@ spec:
         - name: SOURCE_ARTIFACT
           value: $(tasks.prefetch-dependencies.results.SOURCE_ARTIFACT)
         - name: CACHI2_ARTIFACT
-          value: $(tasks.prefetch-dependencies.results.PREFETCH_ARTIFACT)
+          value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       runAfter:
         - build-image-index
       taskRef:
