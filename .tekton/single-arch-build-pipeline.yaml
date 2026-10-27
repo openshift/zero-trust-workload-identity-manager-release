@@ -59,6 +59,10 @@ spec:
       description: Enable cache proxy configuration
       name: enable-cache-proxy
       type: string
+    - default: "true"
+      description: Use the package registry proxy when prefetching dependencies
+      name: enable-package-registry-proxy
+      type: string
     - default:
         - $(params.build-args)
       description: Array of --build-arg values ("arg=value" strings) for buildah
@@ -133,6 +137,8 @@ spec:
           value: $(params.output-image).prefetch
         - name: ociArtifactExpiresAfter
           value: $(params.image-expires-after)
+        - name: enable-package-registry-proxy
+          value: $(params.enable-package-registry-proxy)
       runAfter:
         - clone-repository
       taskRef:
@@ -140,7 +146,7 @@ spec:
           - name: name
             value: prefetch-dependencies-oci-ta
           - name: bundle
-            value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies-oci-ta:0.10.3@sha256:0c386f2c26b46b978280c5c54caac26bcd524975f8f7cc06bb080ba00eae3ad4
+            value: quay.io/konflux-ci/tekton-catalog/task-prefetch-dependencies-oci-ta:0.11.0@sha256:7ffdaab6322c4bed64297eb79f767d92609a3e24bd123b14dc73536c038bf5b7
           - name: kind
             value: task
         resolver: bundles
