@@ -1,5 +1,5 @@
 # Builder image using Red Hat's FIPS-compliant Golang toolchain
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.24 AS builder
+FROM registry.redhat.io/openshift/golang-builder:golang-builder-v1.24-rhel9 AS builder
 
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spiffe-helper"
 
@@ -18,7 +18,7 @@ RUN go build -o bin/spiffe-helper -ldflags "-w -s" -tags ${GO_BUILD_TAGS} cmd/sp
 
 # Final runtime image: minimal RHEL 9 image
 # using UBI 9.8 image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:9.8-1791898448
+FROM registry.redhat.io/ubi9/ubi-minimal:9.8-1792742033
 
 # Konflux build metadata
 ARG RELEASE_VERSION
