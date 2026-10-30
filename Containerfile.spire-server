@@ -28,7 +28,7 @@ RUN go build -o bin/spire-server -ldflags '-w -s' -tags ${GO_BUILD_TAGS} cmd/spi
 
 # Final minimal image
 # using UBI 9.8 image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:9.8-1792742033
+FROM registry.redhat.io/ubi9/ubi-minimal:9.8-1793253163
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
