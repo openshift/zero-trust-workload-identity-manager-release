@@ -1,4 +1,4 @@
-FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_9_golang_1.26 AS builder
+FROM registry.redhat.io/openshift/golang-builder:golang-builder-v1.26-rhel9 AS builder
 
 ARG SOURCE_DIR="/go/src/github.com/openshift/spiffe-spire"
 WORKDIR ${SOURCE_DIR}
@@ -17,7 +17,7 @@ RUN go build -o bin/oidc-discovery-provider -ldflags '-w -s' -tags ${GO_BUILD_TA
 
 # Stage 2: Minimal runtime image
 #using latest UBI image from registry.redhat.io
-FROM registry.redhat.io/ubi9/ubi-minimal:latest@sha256:5ed244b62bbf4095080144d9d35eb8fcd3d39a9801f94aadd63b9d10978a01ae
+FROM registry.redhat.io/ubi9/ubi-minimal:9.8-1792742033
 
 ARG RELEASE_VERSION
 ARG COMMIT_SHA
